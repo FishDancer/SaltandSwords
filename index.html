@@ -1,0 +1,1390 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dropdown Sidebar</title>
+      <style>
+        /* CSS for sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 190px; /* Adjust width as needed */
+            background-color: #f0f0f0; /* Sidebar background color */
+            padding: 20px;
+            overflow-y: auto; /* Enable vertical scrolling */
+            float: left; /* Float the sidebar to the left */
+            z-index: 1; /* Ensure sidebar appears above content */
+        }
+        .container {
+            display: flex;
+        }
+        .content {
+            flex-grow: 1; /* Allow content to grow to fill remaining space */
+            padding: 20px; /* Adjust padding as needed */
+            margin-left: 220px; /* Ensure content doesn't overlap with sidebar */
+            color: #00000; /* Default text color */
+        }
+        /* Additional rule for dark mode sidebar background color */
+        .dark-mode .sidebar {
+        background-color: #00054a; /* Dark mode background color for the sidebar */
+        }
+        /* Additional rules for dark mode sidebar text color */
+        .dark-mode .sidebar a {
+        color: #c9c7c7; /* Dark mode text color for sidebar links */
+        }
+        /* Style for sidebar links */
+        .sidebar a {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+            text-decoration: none;
+        }
+        /* Style for active link */
+        .sidebar a.active {
+            font-weight: bold;
+        }
+        /* Style for dropdown menu */
+        .dropdown-content {
+            display: none;
+            padding-left: 20px;
+        }
+
+        /* Show dropdown content on hover */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        body {
+            transition: background-color 0.3s, color 0.3s; /* Smooth transition for dark mode */
+            margin: 0; /* Remove default margin */
+            font-family: Arial, sans-serif; /* Set default font family */
+            background-color: #fff; /* Default background color */
+            color: #00000; /* Default text color */
+        }
+
+        .dark-mode {
+            background-color: #183d28; /* Dark mode background color */
+            color: #c9c7c7; /* Dark mode text color */
+        }
+
+        .dark-mode-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #030699;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 9999; /* Ensure button appears on top */
+        }
+    </style>
+    
+</head>
+<body>
+<button class="dark-mode-btn" onclick="toggleDarkMode()">Dark Mode</button>
+<script>
+    // JavaScript function to toggle dark mode
+    function toggleDarkMode() {
+        var body = document.body;
+        body.classList.toggle("dark-mode"); // Toggle the dark-mode class on the body
+    }
+</script>
+<!-- Sidebar -->
+<div class="sidebar">
+    <ul>        
+        <li class="dropdown">
+            <a href="#abjuration">Abjuration</a>
+            <ul class="dropdown-content">
+                <li><a href="#abj0">Cantrips: Shield, Resistance</a></li>
+                <li><a href="#abj1">1 fp: Poison Resistance, Warding Bond</a></li>
+                <li><a href="#abj2">2 fp: Magnetic Repulsion, Wall of Wind</a></li>
+                <li><a href="#abj3">3 fp: Energy Resistance</a></li>
+                <li><a href="#abj4">4 fp: Missile Mirror</a></li>
+                <li><a href="#abj5">5 fp: Wall of Force</a></li>
+                <li><a href="#abj6">6 fp: Death Ward</a></li>
+                <li><a href="#abj7">7 fp: Chromatic Armor</a></li>
+                <li><a href="#abj8">8 fp: Invulnerability</a></li>
+            </ul>
+        </li>
+       <li class="dropdown">
+            <a href="#acid">Acid</a>
+            <ul class="dropdown-content">
+                <li><a href="#acid0">Cantrips: Acid Splash, Corrode</a></li>
+                <li><a href="#acid1">1 fp: Acid Arrow, Acid Spray</a></li>
+                <li><a href="#acid2">2 fp: Acid Burst, Acid Rain</a></li>
+                <li><a href="#acid3">3 fp: Blinding Foam</a></li>
+                <li><a href="#acid4">4 fp: Create Acid</a></li>
+                <li><a href="#acid5">5 fp: Acid Wall</a></li>
+                <li><a href="#acid6">6 fp: Death Ward</a></li>
+                <li><a href="#acid7">7 fp: Acid Sphere</a></li>
+                <li><a href="#acid8">8 fp: Corrosive Body</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="#cold">Cold</a>
+            <ul class="dropdown-content">
+                <li><a href="#cold0">Cantrips: Ray of Frost, Chill Touch</a></li>
+                <li><a href="#cold1">1 fp: Torrent, Flash Freeze</a></li>
+                <li><a href="#cold2">2 fp: Ice Knife, Ice Armor</a></li>
+                <li><a href="#cold3">3 fp: Snowballs</a></li>
+                <li><a href="#cold4">4 fp: Blizzard</a></li>
+                <li><a href="#cold5">5 fp: Slow</a></li>
+                <li><a href="#cold6">6 fp: Cone of Cold</a></li>
+                <li><a href="#cold7">7 fp: Chilling Darkness</a></li>
+                <li><a href="#cold8">8 fp: Frost Avatar</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="#death">Death</a>
+            <ul class="dropdown-content">
+                <li><a href="#dead0">Cantrips: Draining Kiss, Touch of the Reaper</a></li>
+                <li><a href="#dead1">1 fp: Harm, Death Rot</a></li>
+                <li><a href="#dead2">2 fp: Extract Life, Vampiric Mist</a></li>
+                <li><a href="#dead3">3 fp: Vampiric Touch</a></li>
+                <li><a href="#dead4">4 fp: Greater Harm</a></li>
+                <li><a href="#dead5">5 fp: Enervation</a></li>
+                <li><a href="#dead6">6 fp: Mass Harm</a></li>
+                <li><a href="#dead7">7 fp: Touch of Death</a></li>
+                <li><a href="#dead8">8 fp: Aura of Death</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="#divn">Divination</a>
+            <ul class="dropdown-content">
+                <li><a href="#divn0">Cantrips: Detect Magic, Ghost Sight</a></li>
+                <li><a href="#divn1">1 fp: Anticipate Peril, Approximate</a></li>
+                <li><a href="#divn2">2 fp: See Invisibility, Ill Omen</a></li>
+                <li><a href="#divn3">3 fp: Clairvoyance</a></li>
+                <li><a href="#divn4">4 fp: Behold the Weave</a></li>
+                <li><a href="#divn5">5 fp: Mind Reading</a></li>
+                <li><a href="#divn6">6 fp: True Sight</a></li>
+                <li><a href="#divn7">7 fp: True Seeing</a></li>
+                <li><a href="#divn8">8 fp: Miracle</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="#elec">Electromancy</a>
+            <ul class="dropdown-content">
+                <li><a href="#elec0">Cantrips: Electric Arc, Shocking Grasp</a></li>
+                <li><a href="#elec1">1 fp: Jolt, Charge</a></li>
+                <li><a href="#elec2">2 fp: Sudden Bolt, Lightning Ball</a></li>
+                <li><a href="#elec3">3 fp: Lightning Bolt</a></li>
+                <li><a href="#elec4">4 fp: Chain Lightning</a></li>
+                <li><a href="#elec5">5 fp: Pulse Charge</a></li>
+                <li><a href="#elec6">6 fp: Storm Avatar</a></li>
+                <li><a href="#elec7">7 fp: Lightning Strike</a></li>
+                <li><a href="#elec8">8 fp: Lightning Storm</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="#ench">Enchantment</a>
+            <ul class="dropdown-content">
+                <li><a href="#ench0">Cantrips: Haunting Hymn, Rythmic Lure</a></li>
+                <li><a href="#ench1">1 fp: Command, Sleep</a></li>
+                <li><a href="#ench2">2 fp: Phantasmagoria, Nightmare</a></li>
+                <li><a href="#ench3">3 fp: Suggestion</a></li>
+                <li><a href="#ench4">4 fp: Hypnotic Pattern</a></li>
+                <li><a href="#ench5">5 fp: Confusion</a></li>
+                <li><a href="#ench6">6 fp: Possession</a></li>
+                <li><a href="#ench7">7 fp: Mind Spike</a></li>
+                <li><a href="#ench8">8 fp: Dominate</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="#forc">Force</a>
+            <ul class="dropdown-content">
+                <li><a href="#forc0">Cantrips: Phase Bolt, Floating Disc</a></li>
+                <li><a href="#forc1">1 fp: Magic Missile, Kinetic Ram</a></li>
+                <li><a href="#forc2">2 fp: Conjure Weapon, Mage Bolt</a></li>
+                <li><a href="#forc3">3 fp: Repelling Pulse</a></li>
+                <li><a href="#forc4">4 fp: Force Crush</a></li>
+                <li><a href="#forc5">5 fp: Blade Barrier</a></li>
+                <li><a href="#forc6">6 fp: Force Choke</a></li>
+                <li><a href="#forc7">7 fp: Force Cage</a></li>
+                <li><a href="#forc8">8 fp: Telekinesis</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="#fort">Fortune</a>
+            <ul class="dropdown-content">
+                <li><a href="#fort0">Cantrips: Guidance, Sure Strike</a></li>
+                <li><a href="#fort1">1 fp: Aura of Speed, Bless</a></li>
+                <li><a href="#fort2">2 fp: Blessed Blade, Illuminating Bolt</a></li>
+                <li><a href="#fort3">3 fp: Enlarge</a></li>
+                <li><a href="#fort4">4 fp: Charitable Urge</a></li>
+                <li><a href="#fort5">5 fp: Blur</a></li>
+                <li><a href="#fort6">6 fp: Haste</a></li>
+                <li><a href="#fort7">7 fp: Foresight</a></li>
+                <li><a href="#fort8">8 fp: Fated Confrontation</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="#illu">Illusion</a>
+            <ul class="dropdown-content">
+                <li><a href="#illu0">Cantrips: Minor Illusion, Color Spray</a></li>
+                <li><a href="#illu1">1 fp: Disguise, Invisibility</a></li>
+                <li><a href="#illu2">2 fp: Group Invisibility, Worm's Repast</a></li>
+                <li><a href="#illu3">3 fp: Mirror Image</a></li>
+                <li><a href="#illu4">4 fp: Heart's Desire</a></li>
+                <li><a href="#illu5">5 fp: Hallucinatory Terrain</a></li>
+                <li><a href="#illu6">6 fp: Doppleganger</a></li>
+                <li><a href="#illu7">7 fp: Halucination</a></li>
+                <li><a href="#illu8">8 fp: Weird</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="#life">Life</a>
+            <ul class="dropdown-content">
+                <li><a href="#life0">Cantrips: Spare the Dying, Soothing Touch</a></li>
+                <li><a href="#life1">1 fp: Heal, Restoration</a></li>
+                <li><a href="#life2">2 fp: Extract Poison, Healing Word</a></li>
+                <li><a href="#life3">3 fp: Remove Curse</a></li>
+                <li><a href="#life4">4 fp: Greater Heal</a></li>
+                <li><a href="#life5">5 fp: Greater Restoration</a></li>
+                <li><a href="#life6">6 fp: Mass Heal</a></li>
+                <li><a href="#life7">7 fp: Regenerate</a></li>
+                <li><a href="#life8">8 fp: Aura of Life</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="#male">Malediction</a>
+            <ul class="dropdown-content">
+                <li><a href="#male0">Cantrips: Daze, Fumble</a></li>
+                <li><a href="#male1">1 fp: Ray of Enfeeblement, Bane</a></li>
+                <li><a href="#male2">2 fp: Deafness, Hex</a></li>
+                <li><a href="#male3">3 fp: Touch of Idiocy</a></li>
+                <li><a href="#male4">4 fp: Blindness</a></li>
+                <li><a href="#male5">5 fp: Doom</a></li>
+                <li><a href="#male6">6 fp: Bound in Death</a></li>
+                <li><a href="#male7">7 fp: Feeblemind</a></li>
+                <li><a href="#male8">8 fp: Disjuncction</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="#oclt">Occult</a>
+            <ul class="dropdown-content">
+                <li><a href="#oclt0">Cantrips: Agitate, Gouging Claw</a></li>
+                <li><a href="#oclt1">1 fp: Fear, Horifying Visage</a></li>
+                <li><a href="#oclt2">2 fp: Chaos Bold, Darkness</a></li>
+                <li><a href="#oclt3">3 fp: Flense</a></li>
+                <li><a href="#oclt4">4 fp: Wall of Flesh</a></li>
+                <li><a href="#oclt5">5 fp: Necrotize</a></li>
+                <li><a href="#oclt6">6 fp: Ravenous Darkness</a></li>
+                <li><a href="#oclt7">7 fp: Invoke True Name</a></li>
+                <li><a href="#oclt8">8 fp: Shadow Army</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="#ocea">Ocean</a>
+            <ul class="dropdown-content">
+                <li><a href="#ocea0">Cantrips: Grasping Tentacle, Gust</a></li>
+                <li><a href="#ocea1">1 fp: Mariner's Curse, Quench</a></li>
+                <li><a href="#ocea2">2 fp: Fog, Wind Weaving</a></li>
+                <li><a href="#ocea3">3 fp: Siren's Song</a></li>
+                <li><a href="#ocea4">4 fp: Control Water</a></li>
+                <li><a href="#ocea5">5 fp: Call of the Deep</a></li>
+                <li><a href="#ocea6">6 fp: Shark Form</a></li>
+                <li><a href="#ocea7">7 fp: Tidal Wave</a></li>
+                <li><a href="#ocea8">8 fp: Summon Kraken</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="#prml">Primal</a>
+            <ul class="dropdown-content">
+                <li><a href="#prml0">Cantrips: Tanglefoot, Animal Messenger</a></li>
+                <li><a href="#prml1">1 fp: Savage, Poison Sting</a></li>
+                <li><a href="#prml2">2 fp: Earthbind, Pass Without Trace</a></li>
+                <li><a href="#prml3">3 fp: Feet to Fins</a></li>
+                <li><a href="#prml4">4 fp: Mad Monkeys</a></li>
+                <li><a href="#prml5">5 fp: Beast Avatar</a></li>
+                <li><a href="#prml6">6 fp: Earthquake</a></li>
+                <li><a href="#prml7">7 fp: Tornado</a></li>
+                <li><a href="#prml8">8 fp: Nature's Wrath</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="#pyro">Pyromancy</a>
+            <ul class="dropdown-content">
+                <li><a href="#pyro0">Cantrips: Firebolt, Firelight</a></li>
+                <li><a href="#pyro1">1 fp: Burning Hands, Blaze</a></li>
+                <li><a href="#pyro2">2 fp: Flaming Sphere, Scorching Ray</a></li>
+                <li><a href="#pyro3">3 fp: Fireball</a></li>
+                <li><a href="#pyro4">4 fp: Wall of Fire</a></li>
+                <li><a href="#pyro5">5 fp: Flame Strike</a></li>
+                <li><a href="#pyro6">6 fp: Fiery Retribution</a></li>
+                <li><a href="#pyro7">7 fp: Immolation</a></li>
+                <li><a href="#pyro8">8 fp: Firestorm</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="#soni">Sonic</a>
+            <ul class="dropdown-content">
+                <li><a href="#soni0">Cantrips: Amplify, Ghost Sound</a></li>
+                <li><a href="#soni1">1 fp: Thunderwave, Detection</a></li>
+                <li><a href="#soni2">2 fp: Shatter, Muffle</a></li>
+                <li><a href="#soni3">3 fp: Sonic Pulse</a></li>
+                <li><a href="#soni4">4 fp: Crescendo</a></li>
+                <li><a href="#soni5">5 fp: Resonance</a></li>
+                <li><a href="#soni6">6 fp: Control Voice</a></li>
+                <li><a href="#soni7">7 fp: Sonic Wave</a></li>
+                <li><a href="#soni8">8 fp: Danse Macabre</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="#sumn">Summoning</a>
+            <ul class="dropdown-content">
+                <li><a href="#sumn0">Cantrips: Dancing Lights, Phase Minion</a></li>
+                <li><a href="#sumn1">1 fp: Summon Animal, Healing Spirit</a></li>
+                <li><a href="#sumn2">2 fp: Summon Undead, Basic Banishement</a></li>
+                <li><a href="#sumn3">3 fp: Summon Elemental</a></li>
+                <li><a href="#sumn4">4 fp: Summon Fey</a></li>
+                <li><a href="#sumn5">5 fp: Banishement</a></li>
+                <li><a href="#sumn6">6 fp: Mass Summon Undead</a></li>
+                <li><a href="#sumn7">7 fp: Summon Elemental</a></li>
+                <li><a href="#sumn8">8 fp: Summon Kaiju</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="#tele">Teleportation</a>
+            <ul class="dropdown-content">
+                <li><a href="#tele0">Cantrips: Quick Step, Teleport Strike</a></li>
+                <li><a href="#tele1">1 fp: Teleport Item, Reposition</a></li>
+                <li><a href="#tele2">2 fp: Magnetic Attraction, Shadow Step</a></li>
+                <li><a href="#tele3">3 fp: Misty Step</a></li>
+                <li><a href="#tele4">4 fp: Dimension Door</a></li>
+                <li><a href="#tele5">5 fp: Blink Charge</a></li>
+                <li><a href="#tele6">6 fp: Teleport</a></li>
+                <li><a href="#tele7">7 fp: Plane Shift</a></li>
+                <li><a href="#tele8">8 fp: Gate</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="#tran">Transumtation</a>
+            <ul class="dropdown-content">
+                <li><a href="#tran0">Cantrips: Bite, Light</a></li>
+                <li><a href="#tran1">1 fp: Create Water, Create Food</a></li>
+                <li><a href="#tran2">2 fp: Animal Form, Disfigure</a></li>
+                <li><a href="#tran3">3 fp: Beast Form</a></li>
+                <li><a href="#tran4">4 fp: Stoneskin</a></li>
+                <li><a href="#tran5">5 fp: Transumtation</a></li>
+                <li><a href="#tran6">6 fp: Polymorph</a></li>
+                <li><a href="#tran7">7 fp: Flesh to Stone</a></li>
+                <li><a href="#tran8">8 fp: True Polymoph</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="#rit">Rituals</a>
+            <ul class="dropdown-content">
+                <li><a href="#rittrain">Trained</a></li>
+                <li><a href="#ritexp">Expert</a></li>
+                <li><a href="#ritmas">Master</a></li>
+                <li><a href="#ritleg">Legendary</a></li>
+               
+            </ul>
+        </li>
+    </ul>
+</div>
+</body>
+<!-- Main content -->
+
+   <body>
+    <div class="content">
+        <a id="abjuration"></a>
+      <p><h1><span>Abjuration Discipline</span></h1></p>
+      <p><span>Abjuration spells are basically all protection spells. A high proficiency bonus is not required, making Abjuration an excellent secondary or tertiary discipline.</span></p>
+ 
+        
+      <h3 id="abj0"><span>Cantrips</span></h3>
+      <p><span><strong>Shield</strong></span><span>: 1 action, +1 circumstance bonus to AC, +1 circumstance bonus to toughness till your next turn. You also can use the Shield Block reaction until your next turn, which gives you +2 toughness vs 1 attack.</span></p>
+<br>
+      <p><span><strong>Resistance</strong></span><span>: 1 action. 30&rsquo; range, single target. Target gets a +1 status bonus to the next saving throw it makes durning the next minute.</span></p>
+
+      <h3 id="abj1"><span>1 focus point spells</span></h3>
+
+      <p><span><strong>Poison Resistance</strong></span><span>: 2 actions. Touch range, single target. Target creature becomes resistant 2 to poison damage and has advantage on saving throws against poisons for the next 10 minutes.</span></p>
+<br>
+      <p><span><strong>Warding Bond</strong></span><span>: 1 action. Choose 1 creature within 120&rsquo; to be the aggressor and 1 creature within 120&rsquo; to be the defender. The aggressor makes a Will save. </span><span>Critical Success</span><span>&nbsp;the spell has no effect. </span><span>Success</span><span>&nbsp;the spell makes the defender resistant 1 to the aggressor&rsquo;s attacks for 1 minute. </span><span>Failure</span><span>&nbsp;the spell makes the defender resistant 2 to the aggressor&rsquo;s attacks for 1 minute. </span><span>Critical Failure</span><span>&nbsp;the spell makes the defender resistant 3 to the aggressor&rsquo;s attacks for 1 minute. The attacker is aware that this spell made it harder for them to hurt the defender.</span></p>
+     
+      <h3 id="abj2"><span>2 focus point spells</span></h3>
+      <p><span><strong>Magnetic Repulsion</strong></span><span>: 1 action. You gain a +1 status bonus to AC vs weapons with metal cutting edges for the next 10 minutes. Such weapons include swords, axes, spears, arrows... But it doesn't include clubs, rocks, darts, whips&hellip;</span></p>
+<br>
+      <p><span><strong>Wall of Wind</strong></span><span>: 2 actions. Conjure a wall of whistling wind that lasts for 1 hour or until you dispel it as an action. Choose 6 consecutive 5&rsquo; wide by 5&rsquo; long by 10&rsquo; tall panels all wholly within 60&rsquo; or 1 10&rsquo;-5&rsquo; radius half torus (so a big 10&rsquo; radius hemisphere with a small 5&rsquo; radius hemisphere cut out of the center) also wholly within 60&rsquo;. The chosen volume is filled with gale-force wind. And projectiles that pass through the volume have disadvantage to hit. Any creature passing through the volume moves at &frac14; speed.</span></p>
+   
+      <h3 id="abj3"><span>3 focus point spells</span></h3>
+      <p><span><strong>Energy Resistance</strong></span><span>: 2 actions. Touch range, single target. Target creature becomes </span><span>resistant 3 to</span><span>&nbsp;Acid, Cold, Electric, Fire, and Sonic damage for 10 minutes.</span></p>
+   
+      <h3 id="abj4"><span>4 focus point spells</span></h3>
+      <p><span><strong>Missile Mirror</strong></span><span>: 2 actions. Touch range, single target. For the next minute the target is surrounded by a shimmering magical barrier that deflects ranged attacks. All ranged attacks made against this shielded creature have disadvantage. Also ranged attacks that critically miss are rebounded onto the original attacker. These re-bound attacks use your protection spell attack modifier</span><span>&nbsp;</span><span>for the attack roll and deal the same damage as the original attack.</span></p>
+    
+      <h3 id="abj5"><span>5 focus point spells</span></h3>
+      <p><span><strong>Wall of Force</strong></span><span>: 2 actions. Conjure a wall of impenetrable force that lasts for 1 hour or until you dispel it as an action. Choose 6 consecutive 5&rsquo; wide by 5&rsquo; long by 10&rsquo; tall panels all wholly within 60&rsquo; or 1 10&rsquo;-5&rsquo; radius half torus (so a big 10&rsquo; radius hemisphere with a small 5&rsquo; radius hemisphere cut out of the center) also wholly within 60&rsquo;. A creature that would be encircled or trapped by this gets a reflex save to move to the other side of the wall and not be trapped. The chosen volume is filled with an impenetrable, invisible magical barrier. Nothing except light can go through the barrier. This includes air, so a hemisphere could suffocate the creatures inside if there are a lot of creatures inside.</span></p>
+  
+      <h3 id="abj6"><span>6 focus point spells</span></h3>
+      <p><span><strong>Death Ward</strong></span><span>: 3 actions. Touch range, single target. The next time during the next hour the target creature is reduced to 0 wounds they go to 1 wound instead.</span></p>
+
+      <h3 id="abj7"><span>7 focus point spells</span></h3>
+      <p><span><strong>Chromatic Armor</strong></span><span>: 2 actions. You conjure a suit of magic armor for yourself from pure elemental power. Choose one: Acid, Cold, Electric, Fire, Sonic. You gain resistance 4 to the chosen damage. Also whenever a creature touches you or hits you with a melee attack they take 2D8 of the chosen damage type (they don&rsquo;t get a save). This spell lasts for 10 minutes.</span></p>
+   
+      <h3 id="abj8"><span>8 focus point spells</span></h3>
+      <p><span><strong>Invulnerability</strong></span><span>: 2 actions. You are invulnerable to all damage for 1D4 rounds.</span></p>
+
+        
+        
+        
+        
+       <!-- give each spell its own unique href id -->
+        <a id="acid"></a>
+      <p><h1><span>Acid Discipline</span></h1></p>
+      <p><span>Acid is primarily a damage discipline. Acid spells tend to be short range and AOE. There are a few utility spells too.</span></p>
+   
+        
+      <h3 id="#acid0"><span>Cantrips</span></h3>
+      <p><span><strong>Acid Splash</strong></span><span>: 2 actions, 60' range, 5' burst, Reflex save vs 2D6 acid damage. If they crit </span><span>fail</span><span>&nbsp;the save, also suffering from Acid Burn.</span></p>
+    <br>
+      <p><span><strong>Corrode</strong></span><span>: 3 actions. Touch range. You slowly apply acid to an object, eventually burning a hole in it with repeated casts. It takes 5 casts to melt through &#8539; of an inch (~3 mm) of iron. Some metals like gold and silver are immune to acid.</span></p>
+      <h3 id="#acid1"><span>1 focus point spells</span></h3>
+      <p><span><strong>Acid Arrow</strong></span><span>: 2 actions. 60' range, single target, attack roll for 2D6+MOD acid damage. Also the target makes a Reflex save. If they fail they become suffering from Acid Burn.</span></p>
+    <br>
+      <p><span><strong>Acid Spray</strong></span><span>: 2 actions. 15' cone. Reflex save vs 2D8 acid damage. If they fail they become suffering from Acid Burn</span></p>
+      <h3 id="#acid2"><span>2 focus point spells</span></h3>    
+      <p><span><strong>Acidic Burst</strong></span><span>: 2 actions. 60' range, 10' burst. Reflex save vs 6D4 Acid damage.</span></p>
+    <br>
+      <p><span><strong>Acid Rain</strong></span><span>: 3 actions. 150' range, 30' radius, 100' high cylinder. Each creature that starts its turn in the cylinder makes a basic Fortitude save vs 2D8 Acid damage. Any creature that fails is also suffering from Acid Burn. This spell lasts for 10 minutes, or until you end it as a 1 action activity. Any objects or buildings that spend the full 10 minutes will be in varying stages of dissolving.</span></p>
+      <h3 id="#acid3"><span>3 focus point spells</span></h3>
+      <p><span><strong>Blinding Foam</strong></span><span>: 2 actions. 10' range, single target. Spray a sticky acidic foam into the target's eyes. The target makes a Reflex save: </span></p>
+      <p><span>Critical success: they are unaffected.</span></p>
+      <p><span>Success: they are suffering from Acid Burn.</span></p>
+      <p><span>Failure: They are suffering from Acid Burn and are Blind while suffering from said Acid Burn.</span></p>
+      <p><span>Critical Failure: They are suffering from Acid Burn and are Blind for 1 hour.</span></p>
+      <h3 id="#acid4"><span>4 focus point spells</span></h3>
+      <p><span><strong>Create Acid</strong></span><span>: 3 actions. You conjure a small but easily controllable amount of acid that you can easily put into a container. This acid functions as 1 dose of Acid (look at the items section).</span></p>
+      <h3 id="#acid5"><span>5 focus point spells</span></h3>
+      <p><span><strong>Acid Wall</strong></span><span>: 3 actions. You conjure a wall of acid. Choose 6 consecutive 5' by 5' squares. Those squares are filled with a thick wall of acid that reaches 10' into the air. The acid blocks line of sight, but projectiles can still pass through. Any creatures in the area of effect when the acid appears makes a reflex save or is suffering from Acid Burn. Any creature who starts its turn in the acid or passes through the acid must make a basic reflex save vs 8D4 Acid damage.</span></p>
+      <h3 id="#acid6"><span>6 focus point spells</span></h3>
+      <p><span><strong>Acid Sphere</strong></span><span>: 2 actions. Conjure a sphere of acid that acts as your minion. The sphere has 3 wounds, AC 9+spellcasting prof, speed 20, toughness 7, and +spellcasting prof on all saves. It takes half damage from all sources except Sonic and Force and is immune to acid damage and Acid Burn. It has an attack with +spellcasting attack mod to hit that does 2D8 Acid damage with the Acid Burn trait. The sphere disappears if it is reduced to 0 wounds or after 1 minute passes.</span></p>
+      <h3 id="#acid7"><span>7 focus point spells</span></h3>
+      <p><span><strong>Corrosive Body</strong></span><span>: 3 actions. Self. You become covered in potent acid. You are immune to Acid Burn and are Resistant 6 to Acid damage. Also whenever a creature hits you with an unarmed Strike or attempts to Grab, Shove, Trip, or Disarm you or otherwise touch you they become suffering from Acid Burn. Whenever a creature hits you with a melee Strike they take 3D4 Acid damage. Your fists and other unarmed attacks gain the Acid Burn trait. This spell lasts for 10 minutes, or until you dismiss it as a 1 action activity.</span></p>
+      <h3 id="#acid8"><span>8 focus point spells</span></h3>
+      <p><span><strong>Disintegrate</strong></span><span>: 2 actions. 60' range, single target. Basic Fortitude save vs 20D4 Acid damage.</span></p>
+ 
+        
+        
+        
+        
+        <a id="cold"></a>
+      <p><h1><span>Cold Discipline</span></h1></p>
+      <p><span>Cold is a hybrid discipline. It has ok damaging options and a few defensive and debuff options.</span></p>
+   
+      <h3 id="cold0"><span>Cantrips</span></h3>
+      <p><span><strong>Ray of Frost</strong></span><span>: 1 action, 120' range, single target, attack roll for 1D6+MOD cold damage. On a critical hit they suffer a -5' penalty to speed for 1 round.</span></p>
+    <br>
+      <p><span><strong>Chill Touch</strong></span><span>: 2 actions, melee range, single target, attack roll for 3D4+MOD cold damage.</span></p>
+      <h3 id="cold1"><span>1 focus point spells</span></h3>
+      <p><span><strong>Torrent</strong></span><span>: 1 action. 30' line. Reflex save vs 2D8 Bludgeoning damage. Any Large or smaller creature that fails the save is also pushed back 5', or 10' if they critically fail.</span></p>
+    <br>
+      <p><span><strong>Flash Freeze</strong></span><span>: 1 reaction. When </span><span>you </span><span>take damage, become Resistant 3 to Slashing, Piercing, and Cold damage and Resistant 6 to Fire damage until your next turn as your skin freezes solid. You also become immune to the Burn condition. You are Slowed 1 on your next turn as your skin must melt before you can move.</span></p>
+      <h3 id="cold2"><span>2 focus point spells</span></h3>
+      <p><span><strong>Ice Knife</strong></span><span>: 2 actions. 60' range, single target, attack roll. The attack deals 1D10+MOD piercing damage. Then, hit or miss, the ice knife explodes on the target. Each creature in a 5' burst centered on the target makes a reflex save vs 2D8 cold damage. These are 2 separate instances of damage.</span></p>
+    <br>
+      <p><span><strong>Ice Armor</strong></span><span>: 2 actions. Self. For the next 10 minutes your clothes and armor become covered in an extra layer of ice. This grants you Resistance 1 to Slashing, Piercing, and Cold damage, and Resistance 2 to Fire damage. Also when a creature hits you with a melee attack you can use your reaction to shatter the ice, peppering them in sharp splinters. They make a basic reflex save vs 2D4 Cold plus 2D4 piercing damage. After their attack is resolved this spell ends.</span></p>
+      <h3 id="cold3"><span>3 focus point spells</span></h3>
+      <p><span><strong>Snowballs</strong></span><span>: X actions. Conjure and throw X Snowballs. Each Snowball is 45' range, single target, attack roll. Each does 3D4+MOD cold damage. Each Snowball is a separate instance of damage.</span></p>
+      <h3 id="cold4"><span>4 focus point spells</span></h3>
+      <p><span><strong>Blizzard</strong></span><span>: 3 actions. 150' range, 30' radius, 100' high cylinder. The cylinder is filled with blinding snow and howling winds. Creatures in the cylinder are Obscured, and all creatures are Obscured to them. Ranged attacks fired through the blizzard have -33% range. All non-magical flames are immediately extinguished when they enter the blizzard and you must attempt to Counteract all magical flames that enter the blizzard (this includes flames from spells like Firebolt or Fireball). The blizzard is Difficult Terrain. Creatures that start their turn inside the blizzard must make a basic Fortitude save vs 4D8 Cold damage. If they fail the save they also suffer a -10' penalty to their speed for 1 round, or 1 minute on a critical failure. The blizzard lasts for 1 minute or until you Dispel it as a 1 action activity.</span></p>
+      <h3 id="cold5"><span>5 focus point spells</span></h3>
+      <p><span><strong>Slow</strong></span><span>: 2 actions. 60' range, Fortitude saving throw.</span></p>
+      <p><span>Critical Success: not affected.</span></p>
+      <p><span>Success: Slowed 1 for 1 round.</span></p>
+      <p><span>Failure: Slowed 1 for 1 minute.</span></p>
+      <p><span>Critical Failure: Slowed 2 for 1 minute.</span></p>
+      <h3 id="cold6"><span>6 focus point spells</span></h3>
+      <p><span><strong>Cone of Cold</strong></span><span>: 2 actions. 60' Cone. Basic Fortitude saving throw vs 6D8 Cold damage.</span></p>
+      <h3 id="cold7"><span>7 focus point spells</span></h3>
+      <p><span><strong>Chilling Darkness</strong></span><span>: 2 actions. 150' range, 20' radius sphere. The sphere is filled with a magical darkness. Attempt to Counteract all magical light inside the sphere or that enters the sphere. When the sphere appears, and whenever a creature ends its turn in the sphere, it makes a basic Fortitude save vs 4D12 Cold damage. Whenever a creature starts its turn in the sphere it must make a Will save. On a success it becomes Frightened 1. On a failure it becomes Frightened 1 and loses 1 action. On a critical failure it becomes Frightened 2 and loses 2 actions. The sphere lasts for 24 hours or until you dismiss it as a 1 action activity.</span></p>
+      <h3 id="cold8"><span>8 focus point spells</span></h3>
+      <p><span><strong>Frost Avatar</strong></span><span>: 2 actions. Self. You take on a mighty Frost Avatar battle form. This transformation lasts for 10 minutes or until you drop to 0 wounds or dismiss it as a 1 action activity. Your size increases by 1 category, your Toughness increases by 4, your AC decreases by 2, your speed increases by 5', and you gain 2 temporary wounds. You also become Immune to Cold damage, but Weak 4 to Fire damage. You gain the following attacks (which use your spell attack modifier, but don't benefit from any weapon runes or magical foci), but lose all other special actions and weapon attacks (you can still take universal actions):</span></p>
+      <p><span></span><span>Frost Spear</span><span>: 2D6+MOD Cold, Reach, Brace, Trip, Lance (2D6).</span></p>
+      <p><span></span><span>Icicle</span><span>: 45' range, 2D4+MOD Cold, Precision, can create and throw in 1 action.</span></p>
+      <p><span></span><span>Freezing Breath</span><span>: 2 actions, 15' Cone, basic Fort save vs 3D10 Cold damage.</span></p>
+     
+        
+        
+        
+        
+        <a id="dead"></a>
+        <p><h1><span>Death Discipline</span></h1></p>
+      <p><span>Basically the mirror image of the life domain. Death spells hurt the living and heal undead</span></p>
+ 
+      <h3 id="dead0"><span>Cantrips</span></h3>
+      <p><span><strong>Draining Kiss</strong></span><span>: 2 actions. Touch range, single target. Deal 4D4 negative damage with a basic fortitude save. If the target fails the save they are also Drained 1 for 1 minute, or Drained 2 for 1 minute on a critical failure.</span></p>
+<br>
+      <p><span><strong>Touch of the Reaper</strong></span><span>: 1 action. Touch range, single target. If the target is Dying they make a fortitude save, increasing their dying condition by 1 on a success, 2 on a failure, and 3 on a critical failure. Alternatively, if the target is a Dying undead they recover from the Dying condition.</span></p>
+      <h3 id="dead1"><span>1 focus point spells</span></h3>
+      <p><span><strong>Harm</strong></span><span>: 2 actions. Touch range, single target, deal 3D8 negative damage with a basic fortitude save or heal 1 wound to undead.</span></p>
+<br>
+      <p><span><strong>Death Rot</strong></span><span>: 1 action. Touch range, single target. Make an attack roll. On a hit the target is infected with Death Rot at stage 1 (or stage 2 on a critical hit). You can spend 2 additional focus points any number of times when casting this spell to increase the DC of the death rot by 3 each time.</span></p>
+      <br>
+      <p><span>Death Rot</span><span>: </span><span>DC 15, onset 1 day. Stage 1: Carrier, unaffected. Stage 2: Drained 1. Stage 3: Drained 1 and -1 MAX wounds, which only goes away if </span><span>recover</span><span>&nbsp;fully. If MAX wounds are reduced to 0, die and rise as a zombie 1 hour later.</span></p>
+      <h3 id="dead2"><span>2 focus point spells</span></h3>
+      <p><span><strong>Extract Life</strong></span><span>: 2 actions. 30' range, single target. Deal 3D8 negative damage with a basic fortitude save. You regain wounds equal to the number of wounds the target lost.</span></p>
+<br>
+      <p><span><strong>Vampiric Mist</strong></span><span>: 3 actions. Conjure a cloud of vampiric mist in a 30' radius sphere centered on a point within 90'. The mist lasts for 10 minutes and is opaque, so it makes creatures Concealed. Any creature that starts its turn in the mist must make a fortitude save. If they </span><span>succeed</span><span>&nbsp;they become drained 1 for 1 minute. If they </span><span>fail</span><span>&nbsp;they become drained 2 for 1 minute. If they </span><span>critically fail</span><span>&nbsp;they become drained 3 for 1 minute. Any creature that ends its turn in the mist makes a basic fortitude save vs 3D4 negative damage.</span></p>
+      <h3 id="dead3"><span>3 focus point spells</span></h3>
+      <p><span><strong>Vampiric Touch</strong></span><span>: 1 action. Touch range, single target. Target makes a fortitude save. </span><span>Success</span><span>: they lose 1 wound. </span><span>Failure</span><span>: they lose 1 wound and you regain 1 wound. </span><span>Critical Failure</span><span>: they lose 2 wounds and </span><span>you regain</span><span>&nbsp;2 wounds.</span></p>
+      <h3 id="dead4"><span>4 focus point spells</span></h3>
+      <p><span><strong>Greater Harm</strong></span><span>: 2 actions. Touch range, single target, deal 6D8 negative damage with a basic fortitude save or heal 3 wounds to an undead.</span></p>
+      <h3 id="dead5"><span>5 focus point spells</span></h3>
+      <p><span><strong>Enervation</strong></span><span>: 2 actions. 30' line. Fortitude save vs 4D12 negative damage. Creatures who </span><span>fail</span><span>&nbsp;the </span><span>save</span><span>&nbsp;are also Doomed 1 for 1 day, or Doomed 2 for 1 day on a </span><span>critical failure</span><span>.</span></p>
+      <h3 id="dead6"><span>6 focus point spells</span></h3>
+      <p><span><strong>Mass Harm</strong></span><span>: 3 actions. Each creature within 10' is targeted by Greater Harm (so makes a fortitude save vs 6D8 negative damage or heals 3 wounds if undead)</span></p>
+      <h3 id="dead7"><span>7 focus point spells</span></h3>
+      <p><span><strong>Touch of Death</strong></span><span>: 3 actions. Touch range, single target. The target loses half their current wounds (rounding up), or if they are undead they recover all lost wounds, regrow all lost limbs, and recover from all injuries.</span></p>
+      <h3 id="dead8"><span>8 focus point spells</span></h3>
+      <p><span><strong>Aura of Death</strong></span><span>: 3 actions. For the next 10 minutes you are surrounded in an aura of harmful magic. On each of your turns pick a creature within 15'. That creature makes a fortitude save vs 3D8 negative damage, or heals 1 wound if it is undead. This is a free action.</span></p>
+      
+        
+        
+        
+        
+        <a id="divn"></a>
+        <p><h1><span>Divination Discipline</span></h1></p>
+      <p><span>Divination spells provide useful knowledge. Having a high Divination proficiency is not necessary, making it a great secondary or tertiary discipline.</span></p>
+     
+      <h3 id="divn0"><span>Cantrips</span></h3>
+      <p><span><strong>Detect Magic</strong></span><span>: 3 actions. Detect any and all magical sources within 60'. You learn which objects and creatures are magic. This spell is blocked by any amount of lead, 1'' of metal, 6'' of stone, and 1' of wood or other organic material.</span></p>
+<br>
+      <p><span><strong>Ghost Sight</strong></span><span>: 3 actions. For the next minute, you can see through up to 1&rdquo; of metal, 6&rdquo; of stone, and 1' of organic material. Your vision is still completely blocked by any amount of lead.</span></p>
+      <h3 id="divn1"><span>1 focus point spells</span></h3>
+      <p><span><strong>Anticipate Peril</strong></span><span>: 2 actions. Touch range, single target. Target has a +1 status bonus to all its saving throws for the next 10 minutes. </span></p>
+<br>
+      <p><span><strong>Approximate</strong></span><span>: 3 actions. Designate an area wholly within your line of sight and choose a type of thing you would like to approximate. You learn the approximate number of that kind of thing in the area. Examples include cats in a street, people in a building, and goblins under a cloak.</span></p>
+      <h3 id="divn2"><span>2 focus point spells</span></h3>
+      <p><span><strong>See Invisibility</strong></span><span>: 2 actions. Self. For the next 10 minutes you can see invisible creatures and items as if they were not invisible.</span></p>
+<br>
+      <p><span><strong>Ill Omen</strong></span><span>: 2 actions. 30' range, single target. Will save.</span></p>
+      <p><span>Critical Success: unaffected.</span></p>
+      <p><span>Success: disadvantage on their next attack roll.</span></p>
+      <p><span>Failure: disadvantage on their next 2 attack rolls.</span></p>
+      <p><span>Critical Failure: disadvantage on their next 3 attack rolls.</span></p>
+      <h3 id="divn3"><span>3 focus point spells</span></h3>
+      <p><span><strong>Clairvoyance</strong></span><span>: 3 actions. 500' range. You create an invisible floating eye at a location within range (even if it's outside your line of sight or line of effect). The eye can't move, but you can see in all directions from that point as if using your normal visual senses. The eye lasts for 10 minutes.</span></p>
+      <h3 id="divn4"><span>4 focus point spells</span></h3>
+      <p><span><strong>Behold the Weave</strong></span><span>: 2 actions. 60' range, single target. You behold the many timelines that weave around a creature, and in so doing, you make one more likely to occur. The target must attempt a Will save.</span></p>
+      <p><span>Critical Success: no effect.</span></p>
+      <p><span>Success: The target must commit all of its actions that it will get next turn. It must take those actions at some point during its next turn: for example &ldquo;Stride thrice toward Valeros,&rdquo; &ldquo;Cast Firebolt,&rdquo; &ldquo;Strike at Amiri and Valeros with my jaws.&rdquo; Those actions are now locked in, and the creature must attempt them, even if the situation has changed&mdash;if the creature stated that it would Strike at Amiri with its jaws, it must try to do so. If the creature is entirely unable to fulfill the action it committed to&mdash;for instance, if it had only 1 action left and Amiri was out of the range of its jaws Strike&mdash;it loses those actions as it reels in a temporal paradox. The order of the actions is not fixed, so they can stride and then strike or strike and then stride if they choose stride and strike.</span></p>
+      <p><span>Failure: as success but the target must commit all actions for the next 2 turns. Those actions must all occur at some point during its next 2 turns, but the order is not fixed.</span></p>
+      <p><span>Critical Failure: As success but the target must commit 3 turns of actions which must occur in its next 3 turns.</span></p>
+      <h3 id="divn5"><span>5 focus point spells</span></h3>
+      <p><span><strong>Mind Reading</strong></span><span>: 3 actions. Touch range, single target. Will save.</span></p>
+      <p><span>Critical Success: the target learns your surface thoughts.</span></p>
+      <p><span>Success: you learn the target's surface thoughts.</span></p>
+      <p><span>Failure: you learn the target's surface thoughts, and can probe deeper on 1 specific topic. The target makes another Will save. If they fail you learn their thoughts on this topic too.</span></p>
+      <p><span>Critical Failure: you learn the target's surface thoughts, and can probe deeper on 1 specific topic. You learn their thoughts on this topic too.</span></p>
+      <h3 id="divn6"><span>6 focus point spells</span></h3>
+      <p><span><strong>True Target</strong></span><span>: 1 action. 60' range, up to 6 creatures. You delve into the possible futures of the next few seconds to understand all the ways your foe might avoid harm, then cast out a vision of that future to those around you. Designate a creature also within range (not one of the target creatures). Each target has Advantage on attack rolls made against that creature and automatically passes any flat check required to target the creature due to the creature being C</span><span>oncealed</span><span>&nbsp;or H</span><span>idden</span><span>. This effect lasts until the start of your next turn.</span></p>
+      <h3 id="divn7"><span>7 focus point spells</span></h3>
+      <p><span><strong>True Seeing</strong></span><span>: 2 actions. Self. For the next 10 minutes you have True Sight. Creatures with True Sight can see invisible creatures, can see through illusions, can see the auras radiated by magical items and creatures, and can see perfectly in darkness (even magical darkness).</span></p>
+      <h3 id="divn8"><span>8 focus point spells</span></h3>
+      <p><span><strong>Miracle</strong></span><span>: 3 actions. You manipulate timelines to make a certain miraculous event happen. Make an Arcana check. The miracle can be anything, but the less likely it is the higher the DC becomes. Some example DCs: Finding a gold piece while walking down the street is DC 10. All 6 prison guards leaving their posts to have a shit at the same time is DC 20. Suddenly inheriting a fortune from your second cousin's twice removed aunt because her and like 50 of her extended relatives all died in the same tragic accident, making you her closest living relative is DC 30. Finding out that you already own that one unique and impossible to find magic artifact that you needed to find, and had actually been using it as a fashion piece for years without ever thinking it was even magical at all is DC 40.</span></p>
+      <p><span>Critical Success: </span><span>the miracle happens as intended. </span></p>
+      <p><span>Success: the miracle happens, but there might be unintended consequences. </span></p>
+      <p><span>Failure: the miracle might happen, but wrong in some way. For instance it might happen to the wrong people, at the wrong time, or in a totally unforeseen way.</span></p>
+      <p><span>Critical Failure: you messed with the timelines without any idea what you were doing. You have altered your timeline irreversibly and almost certainly for the worse.</span></p>
+       
+        
+        
+        
+        
+        <a id="elec"></a>
+    <p><h1><span>Electromancy Discipline</span></h1></p>
+      <p><span>Electric spells basically all do damage, making electric an excellent damaging discipline but not useful for anything else</span></p>
+    
+        
+      <h3 id="elec0"><span>Cantrips</span></h3>
+      <p><span><strong>Electric Arc</strong></span><span>: 2 actions, 30' range, 2 creatures, Reflex save vs 3D4 electric damage. If they crit fail the save, also Flat Footed till the start of your next turn.</span></p>
+<br>
+      <p><span><strong>Shocking Grasp</strong></span><span>: 1 action, Touch range, 1 creature. Attack roll for 1D6+MOD electric damage. You have advantage on the attack roll if the target is wearing heavy armor made mostly of metal or is made mostly of metal.</span></p>
+      <h3 id="elec1"><span>1 focus point spells</span></h3>
+      <p><span><strong>Jolt</strong></span><span>: 1 action, 60' range, single target. Reflex save. </span><span>Critical Success</span><span>: unaffected. </span><span>Success</span><span>: Shaken +1. </span><span>Failure</span><span>: Shaken +1 and Flat-Footed until the start of your next turn. </span><span>Critical Failure</span><span>: Shaken +2 and Flat-Footed until the start of your next turn.</span></p>
+<br>
+      <p><span><strong>Charge</strong></span><span>: 0 actions. The next time this turn you cast a spell that deals electric damage, increase the number of electric damage die of that spell by 1, and get a +1 status bonus to any attack rolls for the spell and/or the spell's DC. This is considered a status bonus to the number of damage die, so you can't use charge more than once on the same spell or combine it with any other status bonuses. </span></p>
+      <h3 id="elec2"><span>2 focus point spells</span></h3>
+      <p><span><strong>Sudden Bolt</strong></span><span>: 2 actions. 120' range, single target, reflex save vs 2D10+MOD electric damage.</span></p>
+<br>
+      <p><span><strong>Lightning Ball</strong></span><span>: 2 actions. Conjure a ball of electricity that acts as your minion. The ball has 2 wounds, AC 16, speed 20, toughness 6, and +6 on all saves. It is immune to all damage and effects except for force damage. It has an attack with +7 to hit that does 1D6+2 electric damage. The ball can also explode for 2 actions. When it does </span><span>so, each</span><span>&nbsp;creature in a 10' radius sphere centered on the ball is targeted by the ball's attack once and then the ball loses 1 wound. The ball disappears if it is reduced to 0 wounds or after 1 minute passes.</span></p>
+      <h3 id="elec3"><span>3 focus point spells</span></h3>
+      <p><span><strong>Lightning Bolt</strong></span><span>: 2 actions. 120' line. Basic reflex save vs 4D8 electric damage.</span></p>
+      <h3 id="elec4"><span>4 focus point spells</span></h3>
+      <p><span><strong>Chain Lightning</strong></span><span>: 3 actions. 120' range, 3 ordered targets within 15' of the previous target. The first target makes a basic reflex save vs 4D12 electric damage. Provided the first target did not critically succeed on their save, the second target makes a basic reflex save vs 3D12 electric damage. Provided the first and second targets did not critically succeed on their saves, the third target makes a basic reflex save vs 2D12 electric damage. </span></p>
+      <h3 id="elec5"><span>5 focus point spells</span></h3>
+      <p><span><strong>Pulse Charge</strong></span><span>: 2 actions. 20' radius sphere centered on caster. Caster is immune, all other creatures make basic reflex saves vs 8D6 electric damage.</span></p>
+      <h3 id="elec6"><span>6 focus point spells</span></h3>
+      <p><span><strong>Storm Avatar</strong></span><span>: 3 actions. You take on the power of the storm, transforming yourself into a mighty storm avatar. You retain all your statistics (like wounds, toughness, AC, saves, skills), but lose all abilities except for universal actions. You gain a +1 status bonus to AC and toughness, resistance 4 to electric damage, and a fly speed equal to your normal speed. You also gain the listed attacks (that use your spell attack modifier):</span></p>
+      <p><span>Lightning Bolt: 4D4 electric damage, range of 45'.</span></p>
+      <p><span>Thunder Fists: 2D6+spell MOD electric damage, melee range.</span></p>
+      <p><span>This spell ends after 10 minutes, when you are reduced to 0 wounds, or when you dispel it using an action.</span></p>
+      <h3 id="elec7"><span>7 focus point spells</span></h3>
+      <p><span><strong>Lightning Strike</strong></span><span>: 2 actions. 120' range, single target. Basic reflex save vs 6D12 electric damage. A creature who fails the save is also flat-footed until the start of your next turn.</span></p>
+      <h3 id="elec8"><span>8 focus point spells</span></h3>
+      <p><span><strong>Lightning Storm</strong></span><span>: X actions. X 15' spheres centered on points within 500' (can overlap. Creatures caught in multiple overlapping spheres make saves and take damage for each sphere separately). Basic reflex save vs 5D10 lightning damage.</span></p>
+   
+        
+        
+        
+        
+        <a id="ench"></a>
+    <p><h1><span>Enchantment Discipline</span></h1></p>
+      <p><span>Enchantment spells manipulate the minds of other creatures. They can be used out of combat to make creatures obey you, or in combat to impose various debuffs.</span></p>
+
+      <h3 id="ench0"><span>Cantrips</span></h3>
+      <p><span><strong>Haunting Hymn</strong></span><span>: 2 actions. 60' range, 10' sphere, Will save.</span></p>
+      <p><span>Critical Success: unaffected.</span></p>
+      <p><span>Success: increase Shaken by 1.</span></p>
+      <p><span>Failure: increase Shaken by 2.</span></p>
+      <p><span>Critical Failure: increase Shaken by 3.</span></p>
+<br>
+      <p><span><strong>Rhythmic Lure</strong></span><span>: 2 actions. Single target, 90' range, Will save. Designate a location also within 90' to be the lure. If the lure location is obviously dangerous the target has Advantage on their saving throw.</span></p>
+      <p><span>Critical Success: unaffected.</span></p>
+      <p><span>Success: increase Shaken by 1.</span></p>
+      <p><span>Failure: increase Shaken by 1. Additionally the target must spend their next action moving as close to the lure as possible.</span></p>
+      <p><span>Critical Failure: increase Shaken by 2. Additionally the target must spend their next 2 actions moving as close to the lure as possible.</span></p>
+      <h3 id="ench1"><span>1 focus point spells</span></h3>
+      <p><span><strong>Command</strong></span><span>: 1 action. 30' range, single target. Will save. On a fail the target must spend its next action complying with a 1-word command you utter during the casting of this spell. On a critical fail the target must spend its next 2 actions complying. If the command is literal suicide the creature gets 1 degree of success higher on its save.</span></p>
+<br>
+      <p><span><strong>Sleep</strong></span><span>: 2 actions. Touch range, single target. The target makes a Will save. When you cast this spell you can spend X additional focus points, which gives the spell a heightened effect.</span></p>
+      <p><span>Critical</span><span>&nbsp;Success:</span><span>&nbsp;they are unaffected.</span></p>
+      <p><span>Success:</span><span>&nbsp;they fall Asleep if they have X+1 or less remaining wounds. Here X is the amount of additional focus points spent to cast this spell.</span></p>
+      <p><span>Fail: t</span><span>hey fall Asleep if they have X+3 or less remaining wounds. </span></p>
+      <p><span>Critical Fail: </span><span>they fall Asleep if they have X+5 or less remaining wounds. </span></p>
+      <p><span>A creature put to sleep by this spell wakes up after 10 minutes, if they take any damage, or they are woken by other means (loud noises, dropped off a cliff, ice water dumped on them&hellip;).</span></p>
+      <h3 id="ench2"><span>2 focus point spells</span></h3>
+      <p><span><strong>Phantasmagoria</strong></span><span>: 2 actions. 60' range, single target. You summon the shadow of the target creature's worst nightmare right behind them. The shadow acts as your minion. It has 2 wounds, Toughness 5, AC 10+spellcasting mod, Speed 25, +spellcasting mod-1 on all saves, and is immune to all damage and effects except for positive and good damage. It disappears after 1 minute or when reduced to 0 wounds. It has a melee attack which has +spellcasting mod to hit, and does 2D4 mental damage with the Fear 1 trait. It can attack creatures that aren't the original target of the spell, but the attack loses the Fear 1 trait.</span></p>
+      <p><span>Here spellcasting mod is your Enchantment spellcasting modifier (so base stat + enchantment proficiency)</span></p>
+<br>
+      <p><span><strong>Nightmare</strong></span><span>: 3 actions, 30' range, single target. You curse the target with horrific nightmares, preventing it from sleeping. Each time the creature goes to make a long rest it makes a Will save. If it fails then it must rest 50% longer to get the benefits of said long rest. On a critical fail it must rest twice as long. This spell ends once the creature succeeds 3 times, or critically succeeds once and succeeds once.</span></p>
+      <h3 id="ench3"><span>3 focus point spells</span></h3>
+      <p><span><strong>Suggestion</strong></span><span>: 2 actions. 30' range, single target, Will save. You suggest a course of action. If the suggested action will put the creature in danger they treat their save as being 1 degree of success higher.</span></p>
+      <p><span>Critical Success: target unaffected.</span></p>
+      <p><span>Success: target Stunned 1.</span></p>
+      <p><span>Failure: target spend the next hour carrying out your request to the best of its ability.</span></p>
+      <p><span>Critical Failure: target spends the next 24 hours carrying out your request to the best of its ability.</span></p>
+      <h3 id="ench4"><span>4 focus point spells</span></h3>
+      <p><span><strong>Hypnotic Pattern</strong></span><span>: 2 actions. 60' range, 20' burst, Will save.</span></p>
+      <p><span>Critical Success: unaffected.</span></p>
+      <p><span>Success: Slowed 1. They get to make another save at the end of their turns and every time they take damage, ending the Slowed condition on a success.</span></p>
+      <p><span>Failure: Slowed 2. They get to make another save at the end of their turns and every time they take damage, ending the Slowed condition on a success.</span></p>
+      <p><span>Critical Failure: Slowed 3. They get to make another save at the end of their turns and every time they take damage, ending the Slowed condition on a success.</span></p>
+      <h3 id="ench5"><span>5 focus point spells</span></h3>
+      <p><span><strong>Confusion</strong></span><span>: 2 actions. 60' range, single target, Will save. </span></p>
+      <p><span>Critical Success: unaffected.</span></p>
+      <p><span>Success: confused for 1 round. While confused they act randomly on their turn. So on each of their actions they either Strike a random target, Stride to a random empty square, Cast a Spell on a random target, or speak gibberish (which is determined randomly by rolling a D4).</span></p>
+      <p><span>Failure: confused for 2 rounds.</span></p>
+      <p><span>Critical Failure: confused for 10 minutes.</span></p>
+      <h3 id="ench6"><span>6 focus point spells</span></h3>
+      <p><span><strong>Possession</strong></span><span>: 3 actions. Melee range, single target, Will save.</span></p>
+      <p><span>Critical Success: target unaffected and you take 4D6 mental damage.</span></p>
+      <p><span>Success: target takes 4D6 mental damage.</span></p>
+      <p><span>Failure: You take possession of the target's body for the next minute, or until you end the possession as a 1 action activity. While possessing a creature you are unconscious, but you control their body, determining what actions they take on each of their turns.</span></p>
+      <p><span>Critical Failure: You take possession of the target's body for the next hour, or until you end the possession as a 1 action activity.</span></p>
+      <h3 id="ench7"><span>7 focus point spells</span></h3>
+      <p><span><strong>Mind Spike</strong></span><span>: 2 actions. 60' range, single target, basic Will save vs 9D8 mental damage.</span></p>
+      <h3 id="ench8"><span>8 focus point spells</span></h3>
+      <p><span><strong>Dominate</strong></span><span>: 3 actions. Melee range, single target, Will save.</span></p>
+      <p><span>Critical Success: target unaffected and you take 6D6 mental damage.</span></p>
+      <p><span>Success: target takes 6D6 mental damage.</span></p>
+      <p><span>Failure: the target becomes dominated for the next minute, or until you end the domination as a 1 action activity. While dominated the creature functions as your minion.</span></p>
+      <p><span>Critical Failure: the target becomes dominated for the next hour, or until you end the domination as a 1 action activity.</span></p>
+      <br>
+      <p><span>While dominated the target acts as a Dependent minion under your control.</span></p>
+   
+        
+        
+        
+        
+        <a id="forc"></a>
+        <p><h1><span>Force Discipline</span></h1></p>
+      <p><span>Force is primarily a damage discipline, but is more versatile than other damage disciplines. The price for this versatility is Force spells do slightly less damage</span></p>
+    
+      <h3 id="forc0"><span>Cantrips</span></h3>
+      <p><span><strong>Phase Bolt</strong></span><span>: 2 actions, 120' range, single target, attack roll for 2D4+MOD force damage. Target gets no cover or shield benefits.</span></p>
+<br>
+      <p><span><strong>Floating Disc</strong></span><span>: 3 actions. Conjure a floating disc that hovers about 15' behind you and follows you around. The disc can carry 25 bulk of stuff and lasts for 1 hour, until you dismiss it as a 1 action activity, or until you cast this cantrip again.</span></p>
+      <h3 id="forc1"><span>1 focus point spells</span></h3>
+      <p><span><strong>Magic Missile</strong></span><span>: X actions. 120' range, single target. The target takes (X+1)D4 Force damage. No hit roll or save. They just take damage. </span></p>
+<br>
+      <p><span><strong>Kinetic Ram</strong></span><span>: 2 actions. 30' line. Each creature makes a Fortitude save vs 2D6 Force damage. Creatures that succeed are pushed back 5'. Creatures that fail are pushed back 10'. Creatures that critically fail are pushed back 15'.</span></p>
+      <h3 id="forc2"><span>2 focus point spells</span></h3>
+      <p><span><strong>Conjure Weapon</strong></span><span>: 1 action. 30' range. Conjure a floating weapon of pure magical energy. The weapon has AC 10+your spellcasting modifier, 12 toughness, and 1 wound. You can spend 1 action to move the weapon 30' (it can fly). You can spend 1 action to attack with the weapon (it has the stats of a 1-handed Martial weapon of your choice and uses your spell attack modifier and base statistic). The weapon disappears after 10 minutes.</span></p>
+<br>
+      <p><span><strong>Mage Bolt</strong></span><span>: 2 actions. 200' range, single target. Attack roll for 7D4 Force damage.</span></p>
+      <h3 id="forc3"><span>3 focus point spells</span></h3>
+      <p><span><strong>Repelling Pulse</strong></span><span>: 1 action. 30' cone, Fortitude save. 2D12 Force damage. If they Succeed they are pushed back 5'. If they fail they are pushed back 10'. If they critically fail they are pushed back 15'.</span></p>
+      <h3 id="forc4"><span>4 focus point spells</span></h3>
+      <p><span><strong>Force Crush</strong></span><span>: 2 actions. 30' range, single target. Summon invisible bands of force to restrain and slowly crush the target. Target creature takes 2D6 Force damage and becomes Grappled. For as long as they remain Grappled they take 2D6 Force damage at the end of their turns. They can spend 1 action to try and escape by making an Athletics or Acrobatics check vs your spellcasting DC. Each time they try to escape they take 2D6 Force damage as the bands tighten.</span></p>
+      <h3 id="forc5"><span>5 focus point spells</span></h3>
+      <p><span><strong>Blade Barrier</strong></span><span>: 2 actions. Touch range, single target. Target creature is surrounded in a magical force field that protects against weapons. They gain Resistance 3 to Bludgeoning, Piercing, and Slashing damage. This effect lasts for 10 minutes.</span></p>
+      <h3 id="forc6"><span>6 focus point spells</span></h3>
+      <p><span><strong>Force Choke</strong></span><span>: 1 action. 30' range, single target. Target creature can't breathe and becomes Choking 1. On each of your subsequent turns you must spend 1 action to continue the choke or else the spell ends. To do so you need to be within 30' of the target. When you do so the target makes a Fortitude save, increasing their Choking stage by 1 on a failure or by 2 on a critical failure, and reducing it by 1 on a critical success. Their save counts as being 1 degree of success better if they spent 1 action gasping for air on their last turn and 1 degree of success worse if they spoke any words (normally one must speak to cast spells) on their last turn. This spell ends if their Choking value ever becomes 0, or a maximum of 10 minutes.</span></p>
+      <h3 id="forc7"><span>7 focus point spells</span></h3>
+      <p><span><strong>Force Cage</strong></span><span>: 2 actions. 30' range, single target. You try to trap the target creature in a cage made of pure magical force. You choose either a large, normal or small cage. Then the creature makes a reflex save. They have </span><span>disadvantage</span><span>&nbsp;if you choose a large cage and advantage if you choose a small cage. If they fail they become trapped in the cage. If they succeed they escape just before the cage is complete, but take 4D8 Force damage as part of the cage wall crushes them during their escape. If they critically succeed they fully escape with no damage. Once trapped inside it is impossible to enter or leave the cage. There are gaps in the cage so air and projectiles can pass through, and the cage bars are invisible. A small cage is so small the trapped creature is also Grappled. A medium cage lets the creature move 5' in every direction. A large cage lets the creature move 15' in every direction. Regardless, the trapped creature treats all their Reflex saving throws as 1 degree of success worse. The cage lasts for 24 hours or until you dismiss it as a 1 action activity.</span></p>
+      <h3 id="forc8"><span>8 focus point spells</span></h3>
+      <p><span><strong>Telekinesis</strong></span><span>: 3 actions. Self. You unleash your true power, able to move objects at will. This spell lasts for 10 minutes, or until you end it as a 1 action activity. While this spell is active you gain the following actions:</span></p>
+      <p><span></span><span><strong>Telekinetic Projectile</strong></span><span>: 1 action. Fling 1 unattended object of 1 bulk or less at a creature. Make an attack roll for 1D8+MOD Bludgeoning damage. This works like a weapon attack with range 60'.</span></p>
+      <p><span></span><span><strong>Telekinetic Movement</strong></span><span>: 1 action. Move 1 object of 50 or less bulk within 60' or 1 creature within 60' up to 20' in any direction. It can fly during this movement, and the movement is too slow to harm anyone. The object/creature begins to fall at the end of this movement, or at the start of your next turn if you spend all 3 actions moving it. An unwilling creature gets to make a reflex save to avoid this unwanted movement.</span></p>
+      <p><span></span><span><strong>Telekinetic Grip</strong></span><span>: 1 action. Choose 1 creature within 60'. They become Grappled until the start of your next turn. A creature can try to escape this grapple by using 1 action and making an Athletics or Acrobatics check vs your spell DC.</span></p>
+      <p><span></span><span><strong>Telekinetic Rend</strong></span><span>: 2 actions. Choose 1 target within 60' and try to rip them in half. They make a Fortitude save vs 6D4 Force damage. A creature or object reduced to 0 wounds by this damage is ripped in half and instantly killed.</span></p>
+
+        
+        
+        
+        
+        <a id="fort"></a>
+<p><h1><span>Fortune Discipline</span></h1></p>
+      <p><span>Fortune spells give powerful buffs, both in and out of combat</span></p>
+    
+      <h3 id="fort0"><span>Cantrips</span></h3>
+      <p><span><strong>Guidance</strong></span><span>: 1 action. 1 creature within 60' gets a +1 status bonus to the next skill check or attack roll it makes durning the next minute.</span></p>
+<br>
+      <p><span><strong>Sure Strike</strong></span><span>: 1 action. The next attack roll you make in the next 1 minute has advantage to hit.</span></p>
+      <h3 id="fort1"><span>1 focus point spells</span></h3>
+      <p><span><strong>Aura of Speed</strong></span><span>: 2 actions. Every creature that starts their turn within 30' of you gains a +5' status bonus to their speed for the rest of their turn. This effect lasts for 1 hour.</span></p>
+<br>
+      <p><span><strong>Bless</strong></span><span>: X actions. X target creatures within 30' get a +1 status bonus on all their checks, DCs, and damage (including attack rolls, saving throws, armor class) until the start of your next turn.</span></p>
+      <h3 id="fort2"><span>2 focus point spells</span></h3>
+      <p><span><strong>Blessed Blade</strong></span><span>: 2 actions. Touch range, 1 weapon. For the next 10 minutes, the weapon deals an extra 2 good or evil damage (depending on you or your dietie's alignment). Good damage only hurts evil creatures and evil damage only hurts good creatures.</span></p>
+<br>
+      <p><span><strong>Illuminating Bolt</strong></span><span>: 2 actions. 60' range, single target. Attack roll for 4D6 radiant damage. On a hit they are also illuminated in magical light, which attempts to counteract all magical darkness around the target, and all invisibility spells affecting the target.</span></p>
+      <h3 id="fort3"><span>3 focus point spells</span></h3>
+      <p><span><strong>Enlarge</strong></span><span>: 2 actions, Touch range, 1 creature. Target creature's size increases by 1 category (so medium to large for instance). Like most transformation magic the target's gear grows with them. Target creature's strength score also increases by 2 (can go past 20), their maximum wounds increases by 1, and their AC decreases by 1. This spell lasts for 1 minute.</span></p>
+      <h3 id="fort4"><span>4 focus point spells</span></h3>
+      <p><span><strong>Charitable Urge</strong></span><span>: 2 actions, 30' range, 1 creature. Target creature makes a Will save. </span><span>Critical success</span><span>: they are unaffected. </span><span>Success</span><span>: they become stunned 1 from being confused, both wanting to give away their possessions and not at the same time. </span><span>Failure</span><span>: they become overwhelmed with a need to give away their most valued possession. On their next turn they spend 2 actions giving their most valuable thing on their person to the poorest creature they can get to with their 2 actions. </span><span>Critical Failure</span><span>: same as failure, except they spend all 3 of their actions instead of just 2.</span></p>
+      <h3 id="fort5"><span>5 focus point spells</span></h3>
+      <p><span><strong>Blur</strong></span><span>: 3 actions, Touch range, 1 creature. Target creature gains +1 status bonus to AC and reflex saves as well as a +10' status bonus to speed for the next minute.</span></p>
+      <h3 id="fort6"><span>6 focus point spells</span></h3>
+      <p><span><strong>Haste</strong></span><span>: 2 actions, Touch range, 1 creature. Target creature becomes Quickened 1 for 1 minute.</span></p>
+      <h3 id="fort7"><span>7 focus point spells</span></h3>
+      <p><span><strong>Foresight</strong></span><span>: 3 actions. Touch range, single target. For the next 10 minutes, you gain a sixth sense that warns you of danger that might befall the target of the spell. If you choose a creature other than yourself as the target, you create a psychic link through which you can inform the target of danger. While </span><span>foresight</span><span>&nbsp;is in effect, the target gains a +2 status bonus to initiative rolls and isn't flat-footed against undetected creatures or when flanked. In addition, you gain the following reaction: </span><span>Forewarn</span><span>. 1 reaction when the target of foresight is targeted by an attack or is forced to make a saving throw, but before any dice are rolled. Effect: The attack against the target is made at disadvantage or the target gains advantage on their saving throw.</span></p>
+      <h3 id="fort8"><span>8 focus point spells</span></h3>
+      <p><span><strong>Fated Confrontation</strong></span><span>: 2 actions. 2 target creatures within 120' (don't have to be visible) You weave the threads of fate to lead two foes into a climactic battle. The targets of this spell are the fated opponents: one of the targets of this spell must be you or a willing ally, and the other must be an enemy.</span></p>
+      <br>
+      <p><span>When you Cast the Spell, the ally you targeted (or you, if you targeted yourself) may teleport to any unoccupied space of their choice within 30' of its fated opponent.</span></p>
+      <br>
+      <p><span>You isolate the two targets for 1 minute. During this time, fate refuses to allow either fated opponent to be affected by attacks or effects from a third party; a fated opponent could be affected by the other's Fireball or its own Heal spell, but it would be entirely immune to a spell or Strike from a creature outside of the spells effects, as well including damage from a hazard or the environment. This doesn't apply to anything that was affecting the targets before you cast </span><span>fated confrontation</span><span>&nbsp;(such as a spell with a duration or persistent damage the creature had before it was affected by </span><span>fated confrontation</span><span>), and fated combatants can still attack other creatures.</span></p>
+      <br>
+      <p><span>This spell ends after 1 minute, if either target is unable to take a hostile action against the other, or if they both agree to cease hostilities.</span></p>
+     
+        
+        
+        
+        <a id="illu"></a>
+        <p><h1><span>Illusion Discipline</span></h1></p>
+      <p><span>Illusion spells are very useful out of combat and are really only limited by your imagination. They are far less useful in combat</span></p>
+   
+      <h3 id="illu0"><span>Cantrips</span></h3>
+      <p><span><strong>Minor Illusion</strong></span><span>: 2 actions. Make a stationary silent illusion that fits inside a 10' cube anywhere within 30'. The illusion lasts for 1D6 hours (the DM rolls this secretly). A creature can attempt a perception check vs your Spell DC to see through the illusion.</span></p>
+<br>
+      <p><span><strong>Color Spray</strong></span><span>: 2 actions. 15' cone, reflex save. Any creatures that fail are coated in magic multicolored glowing paint. They shed bright light in a 5' radius and dim light in a further 5' radius. They also cannot benefit from the Hidden condition. This effect lasts for 10 minutes.</span></p>
+      <h3 id="illu1"><span>1 focus point spells</span></h3>
+      <p><span><strong>Disguise</strong></span><span>: 3 actions. Touch range, single willing target. Create an illusory disguise for the target creature. The disguise can make them look like any other creature, but can't change their apparent weight or height by more than 10%. The disguise lasts for 1D6 hours (the DM should roll this secretly and will let you know when your disguise starts to fade). Creatures can attempt a perception check vs your Spell DC to see through the disguise.</span></p>
+<br>
+      <p><span><strong>Invisibility</strong></span><span>: 3 actions. You become invisible (which mechanically means all other creatures are Blind against you) for 10 minutes or until you make an attack or cast a spell.</span></p>
+      <h3 id="illu2"><span>2 focus point spells</span></h3>
+      <p><span><strong>Group Invisibility</strong></span><span>: 3 actions. You and any creature within 5' of you when you cast this spell become invisible. This functions exactly the same as the regular invisibility spell: a creature becomes invisible (which mechanically means all other creatures are blind against you) for 10 minutes or until they make an attack or cast a spell.</span></p>
+<br>
+      <p><span><strong>Worm's Repast</strong></span><span>: 2 actions, 30' range, single target. The target makes a Will save as illusory worms appear and begin consuming its flesh, complete with grotesque munching noises. </span><span>Critical Success:</span><span>&nbsp;the spell has no effect. </span></p>
+      <p><span>Success:</span><span>&nbsp;the target becomes frightened 1 and stunned 1. </span></p>
+      <p><span>Fail:</span><span>&nbsp;the target becomes frightened 2 and stunned 2. </span></p>
+      <p><span>Critical Fail:</span><span>&nbsp;the target becomes frightened 3 and stunned 3.</span></p>
+      <h3 id="illu3"><span>3 focus point spells</span></h3>
+      <p><span><strong>Mirror Image</strong></span><span>: 1 action. Touch range, single target. Create an illusory duplicate of the target that follows the target around mimicking their actions. When an attack is made against the target there is a 50% chance the attack is made against the illusory duplicate (which is immune to all damage being an illusion). Each time the illusion is hit the chance of it being hit again goes down by 10%. A creature can use 1 action to make a Perception check vs your spell DC to recognise the real version. If they Succeed they recognize the illusion and can target the real creature with their attacks, essentially negating the effects of this spell on them. They can also point out the illusion to any number of creatures within 30' of them as an action, halving the chance they target the illusion and granting them advantage on any perception checks to identify the illusion. If they Critically Succeeded instead the spell ends when they point out the illusion. If they Critically Fail they have Disadvantage on all future attempts to identify the illusion. The illusion disappears after 1 minute.</span></p>
+      <h3 id="illu4"><span>4 focus point spells</span></h3>
+      <p><span><strong>Heart's Desire</strong></span><span>: 3 actions. 120' range, single target. Create an illusion of a creature's deepest desire that appears at a point of your choosing within 120' that is also within 120' of the target. The target creature makes a Will save:</span></p>
+      <p><span>Critical Success: unaffected.</span></p>
+      <p><span>Success: Enthralled by the illusion for 1 minute or until they realize it is an illusion (which requires a successful Perception check vs your spell DC).</span></p>
+      <p><span>Failure: Enthralled by the illusion for 1 minute or until they realize it is an illusion (which requires a successful Perception check vs your spell DC). Additionally the creature must spend its first 2 actions on each of its turns to Stride closer to the illusion.</span></p>
+      <p><span>Critical Failure: Enthralled by the illusion for 10 minutes or until they realize it is an illusion (which requires a successful Perception check vs your spell DC). Additionally the creature must spend its first 2 actions on each of its turns to Stride closer to the illusion.</span></p>
+      <h3 id="illu5"><span>5 focus point spells</span></h3>
+      <p><span><strong>Hallucinatory Terrain</strong></span><span>: 3 actions. 500' range, 250' cube. Create a powerful illusion that covers the ground, trees, buildings, and even creatures in the area. The illusion can be anything but lacks minute detail and won't hold up to close examination. The illusion is also stationary and makes no sound. You can choose not to include any parts of the cube in the illusion and just leave them looking like they normally do. A creature can see through the illusion by succeeding on a Perception check vs your spell DC. They have Advantage on the check if they are within 30' of the illusion.</span></p>
+      <h3 id="illu6"><span>6 focus point spells</span></h3>
+      <p><span><strong>Doppelganger</strong></span><span>: 3 actions. Touch range, single target. Create an illusory duplicate of the target creature. The duplicate will pretend to perform any tasks you ask of it (remember it is an illusion and can't affect any physical objects). It can speak and uses your spellcasting attack modifier for its Deception, Diplomacy, Intimidation, and Performance checks. A creature can see through the illusion by succeeding on a Perception check vs your spell DC. They have disadvantage on the check unless they have some reason to be suspicious of the Doppleganger.</span></p>
+      <h3 id="illu7"><span>7 focus point spells</span></h3>
+      <p><span><strong>Hallucination</strong></span><span>: 3 actions. 60' range, single target. Will save.</span></p>
+      <p><span>Critical Success: unaffected.</span></p>
+      <p><span>Success: the target sees the occasional hallucination. For the next minute, at the start of its turns it makes a Perception check to figure out what is real and what is hallucination. If it succeeds it acts normally. If it fails it acts as if the hallucinations are real. You decide what they are and can spend 1 action to alter them. If any hallucination is particularly unbelievable the target gets to make another Will save, ending the effect on a critical success.</span></p>
+      <p><span>Failure: the target is hallucinating. For the next minute the target believes the hallucinations are real. You decide what they are and can spend 1 action to alter them. If any hallucination is particularly unbelievable the target gets to make another Will save, moving to the Success effect of this spell on a success and ending the effect on a critical success.</span></p>
+      <p><span>Critical Failure: same as Failure except the duration is 10 minutes and the target never gets to make additional saves.</span></p>
+      <h3 id="illu8"><span>8 focus point spells</span></h3>
+      <p><span><strong>Weird</strong></span><span>: 3 actions. Any number of creatures within 120'. You fill the targets' minds with terrifying images of fearsome creatures, each drawn from the targets' worst fears. Only the targets can see their assailants. Each target makes a basic Will save vs 10D6 mental damage. If they </span><span>succeed</span><span>&nbsp;they are also frightened 1. If they </span><span>fail</span><span>&nbsp;they are frightened 2. If they </span><span>critically fail</span><span>&nbsp;they are so afraid, they might instantly die. It must attempt a Fortitude saving throw. If they succeed, they take quadrupole damage (as opposed to the normal double damage) and are frightened 2.. If they fail, they are reduced to 0 Hit Points and die.</span></p>
+    
+        
+        
+        
+        
+        <a id="life"></a>
+    <p><h1><span>Life Discipline</span></h1></p>
+      <p><span>All the healing spells. Note healing magic also hurts undead or creatures with negative healing.</span></p>
+  
+      <h3 id="life0"><span>Cantrips</span></h3>
+      <p><span><strong>Spare the Dying</strong></span><span>: 1 action. Touch range, single target. The target's dying value is decreased by 1, or if the target is a Dying undead they must make a fortitude save, increasing their dying value by 1 on a success, 2 on a failure, and 3 on a critical failure.</span></p>
+<br>
+      <p><span><strong>Soothing Touch</strong></span><span>: 1 action. Touch range, single target. The target reduces their shaken value by 1.</span></p>
+      <h3 id="life1"><span>1 focus point spells</span></h3>
+      <p><span><strong>Heal</strong></span><span>: 2 actions. Touch range, single target. Heal 1 wound or do 3D8 positive damage with a basic fortitude save to undead.</span></p>
+<br>
+      <p><span><strong>Restoration</strong></span><span>: 2 actions. Touch range, single target. Target recovers from 1 poison or disease currently affecting them.</span></p>
+      <h3 id="life2"><span>2 focus point spells</span></h3>
+      <p><span><strong>Extract Poison</strong></span><span>: 2 actions. Touch range, 1 creature or corpse. You extract 1 dose of a poison in the creature's bloodstream or fangs. This should cure the creature of the poison you extracted if you extracted it from their bloodstream.</span></p>
+<br>
+      <p><span><strong>Healing Word</strong></span><span>: 1 action. 30' range, single target. Heal 1 wound or do 3D8 positive damage with a basic fortitude save to undead.</span></p>
+      <h3 id="life3"><span>3 focus point spells</span></h3>
+      <p><span><strong>Remove Curse</strong></span><span>: 2 actions, touch range, single target. Attempt to Counteract 1 spell affecting the target. If multiple spells are affecting the target you get to choose which spell to counteract. If you have not identified all spells affecting the target you learn how many unknown spells are affecting the target and can still choose to counteract spells you haven't identified, but you have no way of distinguishing between multiple unknown spells.</span></p>
+      <h3 id="life4"><span>4 focus point spells</span></h3>
+      <p><span><strong>Greater Heal</strong></span><span>: 2 action. Touch range, single target. Heal 3 wounds or do 6D8 positive damage with a basic fortitude save to undead.</span></p>
+      <h3 id="life5"><span>5 focus point spells</span></h3>
+      <p><span><strong>Greater Restoration</strong></span><span>: 2 actions. Touch range, single target. Target recovers from all poison and disease currently affecting them. In addition you attempt to Counteract any ongoing spells affecting them and can regenerate 1 lost body part or recover from 1 injury. Note this regeneration does not bring creatures back to life, so if someone gets decapitated regenerating their head will not bring them back to life.</span></p>
+      <h3 id="life6"><span>6 focus point spells</span></h3>
+      <p><span><strong>Mass Heal</strong></span><span>: 3 actions. Each creature within 10' is targeted by Greater Heal (so heals 3 wounds or makes a fortitude save vs 6D8 positive damage if undead)</span></p>
+      <h3 id="life7"><span>7 focus point spells</span></h3>
+      <p><span><strong>Regenerate</strong></span><span>: 3 actions. Touch range, single target. The target regains all lost wounds, recovered from all poisons and diseases, regrows any missing limbs, and all scars and lingering physical injuries are removed. If the target is undead it instead loses half its current wounds rounding up (no save).</span></p>
+      <h3 id="life8"><span>8 focus point spells</span></h3>
+      <p><span><strong>Aura of Life</strong></span><span>: 3 actions. For the next 10 minutes you are surrounded in an aura of healing magic. On each of your turns pick a creature within 15'. That creature heals 1 wound, or recovers from 1 poison or disease, or if it is undead makes a fortitude save vs 3D8 positive damage. This is a free action.</span></p>
+   
+        
+        
+        
+        <a id="male"></a>
+    <p><h1><span>Malediction Discipline</span></h1></p>
+      <p><span>Malediction spells have a wide variety of debuff effects to choose from and options to target all 3 saving throws. They also tend to be short range and lack damaging spells</span></p>
+   
+      <h3 id="male0"><span>Cantrips</span></h3>
+      <p><span><strong>Daze</strong></span><span>: 1 action, 30' range, Will save vs 2D4 mental damage. </span><span>If they fail</span><span>&nbsp;the save they are also stunned 1. If </span><span>they critically fail</span><span>&nbsp;the save they are also stunned 2.</span></p>
+<br>
+      <p><span><strong>Fumble</strong></span><span>: 1 action, 45' range. Reflex save or drop 1 item they are wielding or slip and fall prone. If they fail they get to choose which, if they critically fail the caster gets to choose which.</span></p>
+      <h3 id="male1"><span>1 focus point spells</span></h3>
+      <p><span><strong>Ray of Enfeeblement</strong></span><span>: X actions. Fire X rays, one after the other (so you see what happened with the first ray when you choose a target for the next ray). Each ray: </span><span>60'</span><span>&nbsp;range, single target, attack roll. On a hit they become Drained 1 or Enfeebled 1 for 1 minute (your choice). On a critical hit they become Drained 1 and Enfeebled 1 for 1 minute.</span></p>
+<br>
+      <p><span><strong>Bane</strong></span><span>: 2 actions. 30' range, single target. Target makes a Will save. On a failure they suffer a -1 penalty to all checks and DCs for the next minute. On a critical failure the penalty is -2.</span></p>
+      <h3 id="male2"><span>2 focus point spells</span></h3>
+      <p><span><strong>Deafness</strong></span><span>: 2 actions. 60' range, single target, Fortitude save. </span></p>
+      <p><span>Critical Success: unaffected.</span></p>
+      <p><span>Success: Deaf for 1 round.</span></p>
+      <p><span>Failure: Deaf for 1 minute.</span></p>
+      <p><span>Critical Failure: Deaf for 1 hour.</span></p>
+<br>
+      <p><span><strong>Hex</strong></span><span>: 1 action. Melee range, single target, Will save.</span></p>
+      <p><span>Critical success: unaffected.</span></p>
+      <p><span>Success: become Weak 1 to your attacks for 1 minute.</span></p>
+      <p><span>Failure: become Weak 2 to your attacks for 1 minute.</span></p>
+      <p><span>Critical Failure: become Weak 3 to your attacks for 1 minute.</span></p>
+      <br>
+      <h3 id="male3"><span>3 focus point spells</span></h3>
+      <p><span><strong>Touch of Idiocy</strong></span><span>: 1 action. Melee range, single target, Reflex save.</span></p>
+      <p><span>Critical Success: unaffected.</span></p>
+      <p><span>Success: Stupefied for 1 round.</span></p>
+      <p><span>Failure: Stupefied for 1 minute.</span></p>
+      <p><span>Critical Failure: Stupefied for 1 hour.</span></p>
+      <h3 id="male4"><span>4 focus point spells</span></h3>
+      <p><span><strong>Blindness</strong></span><span>: 2 actions. 60' range, single target, Fortitude save. </span></p>
+      <p><span>Critical Success: unaffected.</span></p>
+      <p><span>Success: Blind for 1 round.</span></p>
+      <p><span>Failure: Blind for 1 minute.</span></p>
+      <p><span>Critical Failure: Blind for 1 hour.</span></p>
+      <h3 id="male5"><span>5 focus point spells</span></h3>
+      <p><span><strong>Doom</strong></span><span>: 2 action. Touch range, single target, Will save.</span></p>
+      <p><span>Critical Success: unaffected.</span></p>
+      <p><span>Success: Weak 1 to all damage for 1 minute and Doomed 1.</span></p>
+      <p><span>Failure: Weak 2 to all damage for 1 minute and Doomed 2.</span></p>
+      <p><span>Critical Failure: Weak 3 to all damage for 1 minute and Doomed 3.</span></p>
+      <h3 id="male6"><span>6 focus point spells</span></h3>
+      <p><span><strong>Bound in Death</strong></span><span>: 2 actions, 30' range, single target, Fortitude save. </span></p>
+      <p><span>Critical Success: target unaffected. </span></p>
+      <p><span>Success: Until the start of your next turn, w</span><span>henever you take damage, the target creature also takes the same damage. </span></p>
+      <p><span>Failure: same effect as success, but lasts for 1 minute. </span></p>
+      <p><span>Critical Failure: same effect as success, but lasts indefinitely.</span></p>
+      <h3 id="male7"><span>7 focus point spells</span></h3>
+      <p><span><strong>Feeblemind</strong></span><span>: 2 actions, 60' range, single target, Will save.</span></p>
+      <p><span>Critical Success: target unaffected. </span></p>
+      <p><span>Success: Choose Intelligence, Wisdom, or Charisma. The target's corresponding statistic is reduced by 1. This is a permanent decrease that can't be restored with a simple dispel magic or remove curse. Powerful healing magic is required.</span></p>
+      <p><span>Failure: Same as Success except the statistic is reduced by 2.</span></p>
+      <p><span>Critical Failure: Same as Success except the statistic is reduced by 3.</span></p>
+      <h3 id="male8"><span>8 focus point spells</span></h3>
+      <p><span><strong>Disjunction</strong></span><span>: 3 actions, melee range, target 1 magic item. Make a Spellcasting check and an Arcana check vs an appropriate DC (set by the GM. A simple magic item has DC 20, an extremely powerful item a DC of 30, and a relic of legend 35-40). Count the number of successes you got (critical successes count as 2 successes, critical failures count as -1 successes). If you got 0 or fewer, then this spell has no effect. If you </span><span>got</span><span>&nbsp;1 then the item's magic is suspended for 1 hour. If you got 2 then the item's magic is permanently dispelled. If you </span><span>got</span><span>&nbsp;3 or more then the item's magic is destroyed and you recover 4 focus points as you suck up some of the item's magical power.</span></p>
+       
+        
+        
+        
+        
+        <a id="oclt"></a>
+<p><h1><span>Occult Discipline</span></h1></p>
+      <p><span>Occult spells have a pretty even mix of damaging, debuff, and utility spells</span></p>
+ 
+      <h3 id="oclt0"><span>Cantrips</span></h3>
+      <p><span><strong>Agitate</strong></span><span>: 2 actions. 30' range, single target. Will save vs 1D6+MOD mental damage. If they fail they also suffer a -2 status penalty to their Will save until the end of your next turn, or 1 minute on a critical failure.</span></p>
+<br>
+      <p><span><strong>Gouging Claw</strong></span><span>: 1 action. melee range, single target. Attack roll for 1D6+MOD slashing damage with the Deadly (D8) trait.</span></p>
+      <h3 id="oclt1"><span>1 focus point spells</span></h3>
+      <p><span><strong>Fear</strong></span><span>: 2 actions. 60' range, single target. Will save.</span></p>
+      <p><span>Critical Success: unaffected.</span></p>
+      <p><span>Success: Frightened 1.</span></p>
+      <p><span>Failure: Frightened 2.</span></p>
+      <p><span>Critical Failure: Frightened 3.</span></p>
+<br>
+      <p><span><strong>Horrifying Visage</strong></span><span>: 1 action. 30' burst centered on the caster. Each enemy that can see you makes a Will save.</span></p>
+      <p><span>Critical Success: unaffected.</span></p>
+      <p><span>Success: unaffected</span></p>
+      <p><span>Failure: Frightened 1.</span></p>
+      <p><span>Critical Failure: Frightened 2.</span></p>
+      <h3 id="oclt2"><span>2 focus point spells</span></h3>
+      <p><span><strong>Chaos Bolt</strong></span><span>: 2 actions. 90' range, single target, attack roll. 3D8 damage. The damage type is determined by the first D8: 1 = acid. 2 = cold. 3 = electric. 4 = fire. 5 = force. 6 = necrotic. 7 = radiant. 8 = sonic . If any 2 damage dice are the same, roll 1 more damage dice and add it to the total damage. Then if any 3 damage dice are the same the bolt duplicates and targets another different creature of your choice. There is no limit to the number of times a chaos bolt can duplicate, but it must target a different creature each time.</span></p>
+<br>
+      <p><span><strong>Darkness</strong></span><span>: 2 actions. 60' range, 20' burst. Create a sphere of magical darkness centered on the target point that lasts until dispelled. Also attempt to Counteract any magical light in the area and any magical light that enters the area. Magical darkness puts out non-magical light and darkvision doesn't work in magical darkness. Magical light is unaffected by magical darkness.</span></p>
+      <h3 id="oclt3"><span>3 focus point spells</span></h3>
+      <p><span><strong>Flense</strong></span><span>: 2 actions. Melee range, single target. Fortitude save vs 6D6 slashing damage. If they lose any wounds they also make a Will save.</span></p>
+      <p><span>Critical success: unaffected.</span></p>
+      <p><span>Success: Frightened 1.</span></p>
+      <p><span>Failure: Frightened 2.</span></p>
+      <p><span>Critical Failure: Frightened 3.</span></p>
+      <h3 id="oclt4"><span>4 focus point spells</span></h3>
+      <p><span><strong>Wall of Flesh</strong></span><span>: 3 actions. Choose 6 consecutive 5' by 5' squares. Those squares are filled with writhing masses of flesh that reach 10' into the air. The flesh blocks line of sight and counts as full cover. Designate 1 side as safe. Hundreds of hands and tentacles reach out of the other side trying to grab anyone who gets close. Any creature who starts their turn within 10' of this side, comes within 10' during a Stride action, or uses a Stride action while within 10' must make a reflex save or take 3D6 Bludgeoning damage and become Grappled. A creature Grappled by the wall takes 3D6 Bludgeoning damage at the end of its turns, and can use an action to make an Athletics or Acrobatics check to try and escape. Each 5' section of the wall has AC 16, Toughness 12 and 6 wounds. Each section disappears when reduced to 0 wounds, or after 10 minutes.</span></p>
+      <h3 id="oclt5"><span>5 focus point spells</span></h3>
+      <p><span><strong>Necrotize</strong></span><span>: 2 actions. 30' range, single target. Basic Fortitude save vs 7D8 negative damage.</span></p>
+      <h3 id="oclt6"><span>6 focus point spells</span></h3>
+      <p><span><strong>Ravenous darkness</strong></span><span>: 2 actions. 60' range, 20' burst. Create a sphere of ravenous magical darkness centered on the target point that lasts until dispelled. Also attempt to Counteract any magical light in the area and any magical light that enters the area. Magical darkness puts out non-magical light and darkvision doesn't work in magical darkness. Magical light is unaffected by magical darkness. Any creature that starts its turn in the ravenous darkness or enters the darkness makes a Reflex save vs 4D6 slashing damage and a Will save vs 4D6 mental damage (these are separate instances of damage).</span></p>
+      <h3 id="oclt7"><span>7 focus point spells</span></h3>
+      <p><span><strong>Invoke True Name</strong></span><span>: 2 actions. 90' range, single target. Speak a creature's true name aloud, and utter a short command. They make a Will save. If you don't know their true name they count their save as 1 degree of success higher. If the command is obviously suicidal (like &ldquo;jump off that cliff&rdquo;), they treat their save as 1 degree of success higher.</span></p>
+      <p><span>Critical Success: unaffected.</span></p>
+      <p><span>Success: They must spend their next turn carrying out your command to the best of their ability.</span></p>
+      <p><span>Failure: They must spend the next minute carrying out your command to the best of their ability.</span></p>
+      <p><span>Critical Failure: They must spend the next 24 hours carrying out your command to the best of their ability.</span></p>
+      <h3 id="oclt8"><span>8 focus point spells</span></h3>
+      <p><span><strong>Shadow Army</strong></span><span>: 3 actions. Summon a shadowy army somewhere within 30' that acts as a dependent squad under your control. &ldquo;Prof&rdquo; is your Occult Discipline Proficiency. The squad consists of 12 shadow warriors (which occupies 8 5'*5' squares). The squad has 12 wounds, toughness 5, AC 8+prof, speed 30', +prof-2 on all saves and perception, and resistance 5 to physical damage. Every time the squad loses 1 wound 1 member dies. Each member has a melee attack with +prof-2 to hit that does 2D4+3 Slashing damage with the Fear trait and a ranged attack with +prof-2 to hit that does 1D6+3 Piercing damage with range 45'. Your summoned minions disappear if they are all reduced to 0 wounds or after 1 hour passes.</span></p>
+        
+        
+        
+        
+        <a id="ocea"></a>
+<p><h1><span><strong>Ocean Discipline</strong></span></h1></p>
+      <p><span>Some debuff and damaging spells and a lot of utility spells. Very useful to have on a sailing ship.</span></p>
+     
+      <h3 id="ocea0"><span>Cantrips</span></h3>
+      <p><span><strong>Grasping Tentacle</strong></span><span>: 1 action, Melee range, single target, attack roll. A creature hit by the attack becomes Grappled and also Restrained on a critical hit. If this is cast on a target already Grappled by this spell it does 1D8+MOD Bludgeoning damage with a basic Fortitude save instead. If they critically fail this save they become Restrained if they weren't already. Creatures can use an action to try and escape the grapple by making an Athletics or Acrobatics check vs your spell DC.</span></p>
+<br>
+      <p><span><strong>Gust</strong></span><span>: 1 action, 30' range single target. Target creature makes a Reflex or Fortitude save (their choice). Continuous casting of </span><span>gust</span><span>&nbsp;into a Mast increases the wind level for that mast by 1 step.</span></p>
+      <p><span>Critical Success: unaffected.</span></p>
+      <p><span>Success: pushed backwards 5'.</span></p>
+      <p><span>Failure: pushed backwards 10'.</span></p>
+      <p><span>Critical Failure: pushed backwards 15'.</span></p>
+      <h3 id="ocea1"><span>1 focus point spells</span></h3>
+      <p><span><strong>Mariner's Curse</strong></span><span>: 2 actions, 30' range, single target. Target makes a Will save. If the target is currently accustomed to the movement of the ocean (i.e. is an experienced sailor or is currently on a ship) they have advantage on the save.</span></p>
+      <p><span>Critical Success: Unaffected.</span></p>
+      <p><span>Success: Clumsy 1 for 1 round.</span></p>
+      <p><span>Failure: Clumsy 1 for 1 minute.</span></p>
+      <p><span>Critical Failure: Clumsy 1 for 1 hour.</span></p>
+<br>
+      <p><span><strong>Quench</strong></span><span>: 1 action, 10' sphere centered on a point within 90'. Any creature with any resistance or immunity to Fire damage makes a basic reflex save vs 3D6 cold damage. Also any Burning creature is no longer Burning. If you can cast Quench you also count as being able to cast any spell that deals fire damage for the purpose of the Counter Spell feat.</span></p>
+      <h3 id="ocea2"><span>2 focus point spells</span></h3>
+      <p><span><strong>Fog</strong></span><span>: 2 actions, 120' range, 30' radius burst. The area is filled with thick fog. 5' of fog is Obscuring and more than 15' of fog is Blinding. The fog acts like natural fog once created, so will slowly collapse and spread out along the ground until it dissipates.</span></p>
+<br>
+      <p><span><strong>Wind Weaving</strong></span><span>: 3 actions. For the next hour the wind within 500' of you is 1 stage stronger, 1 stage weaker, or blowing in a direction of your choice. When 2 areas of this spell overlap the casters each make a spellcasting check to see which of them is stronger. The winner of the roll-off's spell overpowers the other spell, totally negating its effects within the overlapping area.</span></p>
+      <h3 id="ocea3"><span>3 focus point spells</span></h3>
+      <p><span><strong>Siren's Song</strong></span><span>: 3 actions, 60' range. Each creature of your choice in the area makes a Will save.</span></p>
+      <p><span>Critical Success: no effect.</span></p>
+      <p><span>Success: Enthralled by you for 1 minute or until they take damage.</span></p>
+      <p><span>Failure: Enthralled by you for 1 minute or until they take damage. While Enthralled they must spend 1 of their actions each turn to move closer to you.</span></p>
+      <p><span>Critical Failure: Enthralled by you for 1 minute or until they take damage. While Enthralled they must spend 2 of their actions each turn to move closer to you.</span></p>
+      <h3 id="ocea4"><span>4 focus point spells</span></h3>
+      <p><span><strong>Control Water</strong></span><span>: 3 actions. For the next 10 minutes you can control water and gain the following actions:</span></p>
+      <p><span>Move Water: 1 action, move a 5' cube of water 20' in any direction.</span></p>
+      <p><span>Heat Water: 1 action, make a 5' cube of water boil.</span></p>
+      <p><span>Cool Water: 1 action, make a 5' cube of water freeze.</span></p>
+      <p><span>Shape water: 2 actions, shape a 10' cube of water into a cool shape.</span></p>
+      <p><span>Redirect Water: 3 actions, reverse the direction of a running body of water for 1 round.</span></p>
+      <h3 id="ocea5"><span>5 focus point spells</span></h3>
+      <p><span><strong>Call of the Deep</strong></span><span>: 3 actions. You let out a primordial challenge that travels through the ocean, asserting yourself as the most powerful creature. The current most powerful creature of the nearby ocean will likely accept your challenge and show itself to fight you. If no creature shows itself or you defeat the creature that does then you become recognised as the most powerful creature by all ocean creatures living within 12 miles. You have advantage on all intimidation checks against them and they will not attack you unless provoked. </span></p>
+      <h3 id="ocea6"><span>6 focus point spells</span></h3>
+      <p><span><strong>Shark Form</strong></span><span>: 2 actions. Take on a battle form of a large shark. This transformation lasts for 1 hour, until you end it as a 1 action activity, or you go unconscious. You gain the following things, but lose all your other abilities (including bonuses from magic gear and runes):</span></p>
+      <p><span>2 temporary wounds. Toughness 10. AC 13+Ocean discipline proficiency, swim 35'. Bite: +Ocean attack modifier, 2D4+5 piercing, Bleed. </span></p>
+      <p><span>Have advantage to track Bleeding creatures and do additional 1D4 damage to Bleeding creatures.</span></p>
+      <h3 id="ocea7"><span>7 focus point spells</span></h3>
+      <p><span><strong>Tidal Wave</strong></span><span>: 2 actions. 250' Cone, Reflex save vs 9D6 bludgeoning damage.</span></p>
+      <h3 id="ocea8"><span>8 focus point spells</span></h3>
+      <p><span><strong>Summon Kraken</strong></span><span>: 3 actions. Summon a Kraken dependent minion to annihilate your foes. &ldquo;Prof&rdquo; is your Ocean Discipline Proficiency. It has 5 wounds, toughness 13, AC 9+prof, speed 20', Swim 40', +2+prof on all saves and perception, and a melee attack with +5+prof to hit that does 1D12+5 bludgeoning damage with 20' reach. Your summoned minion disappears if it is reduced to 0 wounds or after 1 hour passes.</span></p>
+      
+        
+        
+        
+        <a id="prml"></a>
+<p><h1><span>Primal Discipline</span></h1></p>
+      <p><span>An interesting discipline that has a bit of everything.</span></p>
+   
+      <h3 id="prml0"><span>Cantrips</span></h3>
+      <p><span><strong>Tanglefoot</strong></span><span>: 1 action. Attempt to Trip a creature within 30' using your Primal Spell attack modifier instead of Athletics, and they don't get to make an opportunity attack against you if you critically fail.</span></p>
+<br>
+      <p><span><strong>Animal Messenger</strong></span><span>: 3 actions. Choose 1 non-hostile animal within 5' and whisper it a message of no more than 50 words. Then describe the recipient and/or a place the recipient can likely be found. The animal will spend the next hour trying to find someone it thinks matches the description and/or in the place you said the recipient was. When it thinks it has found the recipient your voice emanates from its mouth, repeating the message you whispered. The spell then ends. If the animal does not find a suitable recipient in 1 hour the spell ends and the goes about its normal business.</span></p>
+      <h3 id="prml1"><span>1 focus point spells</span></h3>
+      <p><span><strong>Savage</strong></span><span>: 3 actions. Your nails grow longer and your teeth sharper as you jump on your prey, unleashing a devastating chain of unarmed melee attacks. Stride once. Then make 3 attacks with your Claws: 2D4+MOD Slashing damage, Bleed. Or Jaws: 1D8+MOD Piercing damage, Forceful. They both use your primal spell attack modifier for the attack roll and your spell casting ability modifier for the damage. These attacks don't use or increase your multi-action penalty for Strikes.</span></p>
+<br>
+      <p><span><strong>Poison Sting</strong></span><span>: 1 action. Melee range, single target. You afflict the target with a paralytic venom, no hit rolls or anything required (so they immediately go to stage 1). </span><span>Paralytic Venom</span><span>: DC your spell DC-2. Onset 1 round. Maximum duration 1 minute (10 rounds). </span></p>
+      <p><span>Stage 1: 2D6 poison damage. </span></p>
+      <p><span>Stage 2: 2D6 poison damage and -5' speed. </span></p>
+      <p><span>Stage 3: 2D6 poison damage, -5' speed, Clumsy and Enfeebled 1. </span></p>
+      <p><span>Stage 4: 2D6 poison damage, half speed, Clumsy and Enfeebled 1. </span></p>
+      <p><span>Stage 5: 2D6 poison damage, half speed, Clumsy and Enfeebled 2. </span></p>
+      <p><span>Stage 6: 2D6 poison damage and Paralyzed.</span></p>
+      <h3 id="prml2"><span>2 focus point spells</span></h3>
+      <p><span><strong>Earthbind</strong></span><span>: 1 action. 120' range, single target. The target makes a fortitude save. </span></p>
+      <p><span>Critical success: no effect. </span></p>
+      <p><span>Success: its flying speed is halved for 1 minute. </span></p>
+      <p><span>Fail: it loses its flying speed for 1 minute. &nbsp;It has just enough flying abilities left to not take any fall damage when it falls from the sky on its next turn.</span></p>
+      <p><span>Critical Fail: it loses its flying speed for 10 minutes. On its turn(s) it plummets towards the ground, taking normal fall damage.</span></p>
+<br>
+      <p><span><strong>Pass Without Trace</strong></span><span>: 3 actions. You and any creatures within 30' of you make no noise nor leave any tracks or other traces of your passing. Any creatures using sound to try and perceive you have disadvantage to do so. Any creatures trying to track you via magical means have disadvantage to do so. Any creatures trying to track you via non-magical means have their checks count as 1 degree of success lower (so they need to critically succeed on their checks to track you). This effect lasts for 1 hour.</span></p>
+      <h3 id="prml3"><span>3 focus point spells</span></h3>
+      <p><span><strong>Feet to Fins</strong></span><span>: 3 actions. Single target, touch range. If the target is unwilling it gets to make a Fortitude save to negate this spell. The target's feet and hands become webbed and it grows a set of gills. This gives a -1 penalty on all attack rolls and halves their land speed. But it also lets them breathe underwater and they gain a swimming speed equal to their normal speed. This transformation lasts for 6 hours or until you end it as a 1 action activity.</span></p>
+      <h3 id="prml4"><span>4 focus point spells</span></h3>
+      <p><span><strong>Feet to Fins</strong></span><span>: X actions. Summon X monkey spirits within 30'. These spirits each get 1 action on your turn (including the turn they are summoned), and they follow your commands. They each have 2 wounds, AC 14+prof, Toughness 7, speed 30' with climb 30', and a +3+prof on all saves. They have a +11 Thievery modifier and +2+prof Athletics modifier. and the only actions they can take are Stride, Step, Disarm, and Steal. The monkeys disappear when they are reduced to 0 wounds or after 10 minutes.</span></p>
+      <h3 id="prml5"><span>5 focus point spells</span></h3>
+      <p><span><strong>Beast Avatar</strong></span><span>: 2 actions. Self. Assume the form of a beast. This transformation lasts for 10 minutes or until you drop to 0 wounds or dismiss it as a 1 action activity. Your size increases by 1 category, your Toughness increases by 2, your AC decreases by 1, your speed increases by 5', and you gain 1 temporary wound. You also gain a flying, climbing, or swimming speed equal to your normal speed based on the beast you choose. You gain the following attacks (which use your spell attack modifier, but don't benefit from any weapon runes or magical foci), but lose all other special actions and weapon attacks (you can still take universal actions):</span></p>
+      <p><span></span><span>Melee attack</span><span>: 1D12+spell MOD BL/SL/PI, Armor Piercing.</span></p>
+      <p><span>Ranged attack</span><span>: 45' range, 1D6+spell MOD BL/SL/PI, Precision.</span></p>
+      <p><span></span><span>Charge</span><span>: 2 actions, Stride Twice and make 1 melee Strike.</span></p>
+      <h3 id="prml6"><span>6 focus point spells</span></h3>
+      <p><span><strong>Earthquake</strong></span><span>: 3 actions. 250' range, 50' radius sphere. The ground within the sphere shakes violently. Each creature in the sphere and on the ground makes a basic reflex save vs 5D10 Bludgeoning damage. If they fail they are also knocked prone. Structures in the sphere automatically critically fail their save.</span></p>
+      <h3 id="prml7"><span>7 focus point spells</span></h3>
+      <p><span><strong>Tornado</strong></span><span>: 2 actions. 120' range, 30' radius, 100' high cylinder. The cylinder is filled with a mighty tornado. Ranged attacks fired through the tornado automatically miss. The tornado is Difficult terrain. Any creature that starts its turn inside the tornado (but not in the eye), enters the tornado, or takes any movement actions while inside the tornado must make a Reflex save or Athletics check (their choice) or be swept up into the eye of the tornado. A creature taking a movement action can take time to brace themselves to get advantage on their save, but they take a -10' speed penalty for doing so. A creature in the eye of the tornado is in the center of the cylinder, is grappled, and takes 4D8 Bludgeoning damage at the end of their turn. A creature in the eye of the tornado is released from the grapple at the start of their turn, presumably falling 50' to the ground. The tornado lasts for 10 minutes or until you dismiss it as a 1 action activity.</span></p>
+      <h3 id="prml8"><span>8 focus point spells</span></h3>
+      <p><span><strong>Nature's Wrath</strong></span><span>: 2 actions. Self. Assume a colossal battle form. This transformation lasts for 10 minutes or until you drop to 0 wounds or dismiss it as a 1 action activity. Your size increases by 2 categories, your Toughness increases by 6, your AC decreases by 3, your speed increases by 10', and you gain 2 temporary wounds. You gain the following attacks (which use your spell attack modifier, but don't benefit from any weapon runes or magical foci), but lose all other special actions and weapon attacks (you can still take universal actions):</span></p>
+      <p><span></span><span>Melee attack</span><span>: 2D8+Spell MOD BL/SL/PI, Armor Piercing.</span></p>
+      <p><span>Ranged attack</span><span>: 60' range, 2D4+Spell MOD BL/SL/PI, Precision.</span></p>
+      <p><span></span><span>Charge</span><span>: 2 actions, Stride Twice and make 1 melee Strike.</span></p>
+      
+        
+        
+        
+        <a id="pyro"></a>
+<p><h1><span>Pyromancy Discipline</span></h1></p>
+      <p><span>This is a damage-focused Discipline with basically no utility or non-combat spells</span></p>
+    
+      <h3 id="pyro0"><span>Cantrips</span></h3>
+      <p><span><strong>Firebolt</strong></span><span>: 1 action, 45' range, single target, attack roll for 1D8+MOD fire damage.</span></p>
+<br>
+      <p><span><strong>Firelight</strong></span><span>: 3 actions. Choose 1 object. For the next 10 minutes, that object gives off 30' of bright and 60' of dim light in the form of a flickering flame.</span></p>
+      <h3 id="pyro1"><span>1 focus point spells</span></h3>
+      <p><span><strong>Burning Hands</strong></span><span>: 2 actions. 15' cone, basic reflex save vs 3D6 fire damage.</span></p>
+<br>
+      <p><span><strong>Blaze</strong></span><span>: 1 action. 30' range, single target. Make an attack roll. On a hit the target is Burning. This works on objects, buildings, and vehicles just as well as it does on creatures.</span></p>
+      <h3 id="pyro2"><span>2 focus point spells</span></h3>
+      <p><span>Flaming Sphere</span><span>: 2 actions. Conjure a sphere of fire that acts as your minion. The sphere has 2 wounds, AC 9+spellcasting mod, speed 20, toughness 5, and +spellcasting mod on all saves. It is immune to all damage and effects except for cold damage. It has an attack with +spellcasting mod to hit that does 1D6 fire damage with the Burn trait. The sphere disappears if it is reduced to 0 wounds or after 1 minute passes.</span></p>
+      <p><span>Here spellcasting mod is your Pyromancy spellcasting modifier (so base stat + pyromancy proficiency)</span></p>
+<br>
+      <p><span><strong>Scorching Ray</strong></span><span>: X actions. Fire X rays, one after the other (so you see what happened with the first ray when you choose a target for the next ray). Each ray: </span><span>60'</span><span>&nbsp;range, single target, attack roll for 1D12+MOD fire damage. Each ray is a separate instance of damage and all use the same multi-action penalty.</span></p>
+      <h3 id="pyro3"><span>3 focus point spells</span></h3>
+      <p><span><strong>Fireball</strong></span><span>: 2 actions, 15' radius sphere centered on a point within 120'. Each creature in the sphere makes a basic reflex save vs 5D6 fire damage.</span></p>
+      <h3 id="pyro4"><span>4 focus point spells</span></h3>
+      <p><span><strong>Wall of Fire</strong></span><span>: 2 actions. Choose 6 consecutive 5' by 5' squares. Those squares are engulfed in flames that reach 10' into the air. The flames block line of sight, but projectiles can still pass through (with the exception of projectiles that deal cold damage. Those melt and have their cold damage reduced to 0). Any creatures in the area of effect when the fire appears makes a reflex save or becomes Burning. Any creature who starts its turn in the flames or passes through the flames must make a basic reflex save vs 3D10 Fire damage.</span></p>
+      <h3 id="pyro5"><span>5 focus point spells</span></h3>
+      <p><span><strong>Flame Strike</strong></span><span>: 1 action, Melee range, single target. Make an attack roll for 8D6+MOD fire damage.</span></p>
+      <h3 id="pyro6"><span>6 focus point spells</span></h3>
+      <p><span><strong>Fiery Retribution</strong></span><span>: 2 actions. For the next minute you become surrounded in magical flames that burn those who attack you. Whenever an adjacent creature makes an attack against you, or tries to grab or touch you, they take 2D6 fire damage and become Burning.</span></p>
+      <h3 id="pyro7"><span>7 focus point spells</span></h3>
+      <p><span><strong>Immolation</strong></span><span>: 2 actions. 120' range, single target. Basic reflex save vs 6D12 fire damage. A creature reduced to 0 wounds by this spell's body is incinerated, killing them instantly.</span></p>
+      <h3 id="pyro8"><span>8 focus point spells</span></h3>
+      <p><span><strong>Firestorm</strong></span><span>: X actions. X 15' spheres centered on points within 500' (can overlap. Creatures caught in multiple overlapping spheres make saves and take damage for each sphere separately, and treat each instance of damage as separate). Basic reflex save vs 5D10 fire damage.</span></p>
+        
+        
+        
+        
+        <a id="soni"></a>
+<p><h1><span>Sonic Discipline</span></h1></p>
+      <p><span>This is a mixed Discipline with a fairly even distribution of combat and non-combat spells</span></p>
+    
+      <h3 id="soni0"><span>Cantrips</span></h3>
+      <p><span><strong>Amplify</strong></span><span>: 3 actions. For 1 minute make your voice 9 times louder, which means it travels 3 times as far.</span></p>
+<br>
+      <p><span><strong>Ghost Sound</strong></span><span>: 1 action. Make a short sound originating from a location of your choice within 120'.</span></p>
+      <h3 id="soni1"><span>1 focus point spells</span></h3>
+      <p><span><strong>Thunderwave</strong></span><span>: 1 action. 10' burst centered on caster, basic fortitude save vs 2D6 sonic damage. Caster is immune. Any Large or smaller creature that fails the save is also pushed away 5', or 10' if they critically fail.</span></p>
+<br>
+      <p><span><strong>Detection</strong></span><span>: 3 actions. Make even the faintest of sounds detectable to your discerning ear. Make a perception check to try and listen to your surroundings. Your check counts as 1 level of success higher than what you rolled. So a </span><span>success becomes a critical success ect.</span></p>
+      <h3 id="soni2"><span>2 focus point spells</span></h3>
+      <p><span><strong>Shatter</strong></span><span>: 2 actions, 10' sphere centered on a point within 60'. Basic fortitude save vs 3D8 sonic damage. Objects, buildings, and vehicles automatically critically fail their saves.</span></p>
+<br>
+      <p><span><strong>Muffle</strong></span><span>: 3 actions. Choose an adjacent creature or object. If they are unwilling they must make a Will save or be affected. For the next 10 minutes the target is muffled, meaning all noise they make is completely suppressed. Effectively this makes every other creature Deaf to noise made by the muffled creature. When you cast this spell you get to decide if this muffles their speech as well.</span></p>
+      <h3 id="soni3"><span>3 focus point spells</span></h3>
+      <p><span><strong>Sonic Pulse</strong></span><span>: 2 actions, 60' range, single target. Basic fortitude save vs 6D6 sonic damage.</span></p>
+      <h3 id="soni4"><span>4 focus point spells</span></h3>
+      <p><span><strong>Crescendo</strong></span><span>: 2 actions, 30' sphere centered on a point within 60'. For the next minute a terrible clamoring fills the chosen area. It can be heard outside the area, but only affects creatures in the area. While inside the area creatures are Deaf and if they cast any spells they must make a spell casting check vs your spell DC or the words of their spell are lost to the Crescendo and their spell fails (meaning they spend the actions and focus points to cast it, but it does nothing).</span></p>
+      <h3 id="soni5"><span>5 focus point spells</span></h3>
+      <p><span><strong>Resonance</strong></span><span>: 3 actions. Melee range, 1 object, structure, or vehicle. You find the resonance frequency of the object and then emit a sonic blast at the perfect frequency to destroy it. The target takes 150 sonic damage. This should be pretty devastating, destroying basically any non-magic wall or object and causing severe damage to vehicles. </span></p>
+      <h3 id="soni6"><span>6 focus point spells</span></h3>
+      <p><span><strong>Control Voice</strong></span><span>: 3 actions, 60' range, single target. For the next minute you alter the sounds the target makes to whatever you want. For example you can change the target's words, or make them seem silent. A skilled lip reader might notice a discrepancy, and of course the target will notice. The target can still try and cast spells, but they have to succeed on a spellcasting check vs your spell DC or their spell is lost.</span></p>
+      <h3 id="soni7"><span>7 focus point spells</span></h3>
+      <p><span><strong>Sonic Wave</strong></span><span>: 3 actions, 60' cone. All creatures in the cone make a basic fortitude save vs 12D6 sonic damage.</span></p>
+      <h3 id="soni8"><span>8 focus point spells</span></h3>
+      <p><span><strong>Danse Macabre</strong></span><span>: 3 actions, 30' sphere centered on a point within 120'. You conjure a haunting melody that worms its way into the minds of creatures and forces them to dance to the music. The melody persists for 1 minute. Whenever a creature starts its turn in the area it must make a Will save. If it </span><span>critically succeeds</span><span>&nbsp;it is unaffected. If it </span><span>succeeds</span><span>&nbsp;it spends 1 action dancing. If it </span><span>fails</span><span>&nbsp;it spends its entire turn dancing. If it </span><span>critically fails</span><span>&nbsp;it falls into a hopeless trance, doomed to dance until it drops dead from exhaustion.</span></p>
+      
+        
+        
+        
+        
+        <a id="sumn"></a>
+<p><h1><span>Summoning Discipline</span></h1></p>
+      <p><span>Lots of spells that summon temporary minions of many varieties and also banishment spells. They tend to be quite focus point hungry</span></p>
+      <p><span>Many spells make reference to &ldquo;prof&rdquo;. This is your Summoning Discipline Proficiency Modifier</span></p>
+  
+      <h3 id="sumn0"><span>Cantrips</span></h3>
+      <p><span><strong>Dancing Lights</strong></span><span>: 3 actions. Create a floating orb of colored light. For the next 10 minutes, that object gives off 30' of bright and 60' of dim light. The orb does not move.</span></p>
+<br>
+      <p><span><strong>Phase Minion</strong></span><span>: 1 reaction. When your minion that is not on their native plane (minions summoned by spells are basically never on their native plane) takes damage, you can cast this to phase them slightly out of existence, giving them resistance 4 to the triggering damage. They then phase fully back into existence.</span></p>
+      <h3 id="sumn1"><span>1 focus point spells</span></h3>
+      <p><span><strong>Summon Animal</strong></span><span>: 2 actions. Summon a dependent animal minion. It has 1 wound, toughness 7, AC 13+prof, speed 30', +2+prof on all saves and perception, and a melee attack with +3+prof to hit that does 1D6+3 damage with the Backstabber trait. It disappears if it is reduced to 0 wounds or after 1 minute passes.</span></p>
+<br>
+      <p><span><strong>Healing Spirit</strong></span><span>: 2 actions. You conjure a small healing spirit that acts as your dependent minion. The spirit has 1 wound, Toughness 6, AC 13+prof, speed 25', and a +3+prof on all saving throws. It can cast Soothing Touch and Spare the Dying as innate cantrips. It is fundamentally opposed to violence and will not take any hostile actions against any creature. It disappears if it is reduced to 0 wounds or after 1 minute passes.</span></p>
+      <h3 id="sumn2"><span>2 focus point spells</span></h3>
+      <p><span><strong>Summon Undead</strong></span><span>: 2 actions. Summon a medium undead dependent minion. It has 2 wounds, toughness 9, AC 12+pfor, speed 20', +3+prof on all saves and perception, and a melee attack with +4+prof to hit that does 1D6+3 damage with the Deadly (D8) trait. Your summoned minion disappears if it is reduced to 0 wounds or after 1 minute passes.</span></p>
+<br>
+      <p><span><strong>Basic Banishment</strong></span><span>: 2 actions. Touch range, single target. The target makes a will save. If it fails it is banished to a harmless demi-plane for 1 minute. The target has advantage on this save if it is native to the current plane.</span></p>
+      <h3 id="sumn3"><span>3 focus point spells</span></h3>
+      <p><span><strong>Summon Elemental</strong></span><span>: 2 actions. Summon a medium elemental dependent minion. It has 3 wounds, toughness 8, AC 13+prof, speed 30', +3+prof on all saves and perception, and a melee attack with +4+prof to hit that does 2D4+3 Acid, Cold, Electric, Fire, or Sonic damage (you choose when you cast this spell). They have the appropriate elemental resistance ability based on the damage type (i.e. fire elementals are immune to fire damage, resistant to cold and poison, and weak to cold iron). Your summoned minion disappears if it is reduced to 0 wounds or after 1 minute passes.</span></p>
+      <h3 id="sumn4"><span>4 focus point spells</span></h3>
+      <p><span><strong>Summon Fey</strong></span><span>: 2 actions. Summon a small fey dependent minion. It has 3 wounds, toughness 6, AC 14+prof, speed 35' with a 35' fly speed, +3+prof on all saves and perception, and a melee attack with +5+prof to hit that does 1D6+4 piercing damage with the Backstabber trait. Your summoned minion disappears if it is reduced to 0 wounds or after 1 minute passes.</span></p>
+      <h3 id="sumn5"><span>5 focus point spells</span></h3>
+      <p><span><strong>Banishment</strong></span><span>: 2 actions. Touch range, single target. The target makes a will save. If it fails it is banished to its native plane. If it is on its native plane it is instead banished to a harmless demi-plane for 1 minute. The target has advantage on this save if it is native to the current plane.</span></p>
+      <h3 id="sumn6"><span>6 focus point spells</span></h3>
+      <p><span><strong>Mass Summon Undead</strong></span><span>: 3 actions. Summon a squad of 9 undead dependent minions (which occupies 6 5'*5' squares). The squad has 9 wounds, toughness 9, AC 6+prof, speed 20', +prof-3 on all saves and perception. Every time the squad loses a wound 1 member dies. Each member has a melee attack with +prof-2 to hit that does 1D6+3 damage with the Deadly (D8) trait. Your summoned minions disappear if they are all reduced to 0 wounds or after 1 hour passes.</span></p>
+      <h3 id="sumn7"><span>7 focus point spells</span></h3>
+      <p><span><strong>Mass Summon Elemental</strong></span><span>: 3 actions. Summon a squad of 6 elemental dependent minions (which occupies 4 5'*5' squares). The squad has 12 wounds, toughness 8, AC 7+prof, speed 30', +prof-3 on all saves and perception. Every time the squad loses 2 wounds 1 member dies. Each member has a melee attack with +prof-2 to hit that does 2D4+3 Acid, Cold, Electric, Fire, or Sonic damage (you choose when you cast this spell). They have the appropriate elemental resistance ability based on the damage type (i.e. fire elementals are immune to fire damage, resistant to cold and poison, and weak to cold iron). Your summoned minions disappear if they are all reduced to 0 wounds or after 1 hour passes.</span></p>
+      <h3 id="sumn8"><span>8 focus point spells</span></h3>
+      <p><span><strong>Summon Kaiju</strong></span><span>: 3 actions. Summon a massive Kaiju dependent minion to annihilate your foes. It has 5 wounds, toughness 12, AC 10+prof, speed 35', +2+prof on all saves and perception, and a melee attack with +4+prof to hit that does 2D6+5 bludgeoning damage. Your summoned minion disappears if it is reduced to 0 wounds or after 1 hour passes.</span></p>
+      
+        
+        
+        
+        <a id="tele"></a>
+<p><h1><span>Teleportation Discipline</span></h1></p>
+      <p><span>Pretty self explanatory. Teleportation spells teleport can you and your allies in and out of combat</span></p>
+
+      <h3 id="tele0"><span>Cantrips</span></h3>
+      <p><span><strong>Quick Step</strong></span><span>: 2 actions, Stride twice both times at +10' speed (but also counts as 2 different Stride actions for multi-action penalty).</span></p>
+<br>
+      <p><span><strong>Teleport Strike</strong></span><span>: 2 actions. You open a small temporary portal behind your enemy so you can strike them from behind. Choose 1 target creature within 30'. As part of this spell make 1 Strike with a weapon against that creature or cast a 1 action spell that targets only them. The strike or spell can be melee range, and still counts as being a melee attack if it is a melee weapon/spell. The creature is flat footed vs the attack and the attack/spell deals 1D4 additional Precision damage if it deals damage.</span></p>
+      <h3 id="tele1"><span>1 focus point spells</span></h3>
+      <p><span><strong>Teleport Item</strong></span><span>: 1 action. Instantly teleport 1 item within 60' of less than 12 bulk that you can see into your outstretched hand(s). If the item is being used by a creature they get to make a Reflex saving throw to resist this effect.</span></p>
+<br>
+      <p><span><strong>Reposition</strong></span><span>: 1 action. Swap places with a willing creature within 120'.</span></p>
+      <h3 id="tele2"><span>2 focus point spells</span></h3>
+      <p><span><strong>Magnetic Attraction</strong></span><span>: 1 action. All unattended metal objects within 45' of less than 10 bulk fly through the air into your hands. All unattended metal objects within 30' of less than 20 bulk slide slowly towards you. All attended metal objects within 30' of less than 10 bulk fly through the air into your hands unless their owners succeed on an athletics check vs your Arcane Spell DC. All attended metal objects within 15' of less than 20 bulk slide slowly towards you unless their owners succeed on an athletics check vs your Arcane Spell DC.</span></p>
+<br>
+      <p><span><strong>Shadow Step</strong></span><span>: 2 actions. You must be </span><span>in darkness</span><span>&nbsp;of dim light. Choose another point of darkness or dim light you are aware of within 500'. You teleport to that point. If the chosen point is not in dim light or darkness you take 4D8 Negative damage with a basic fortitude save and don't teleport.</span></p>
+      <h3 id="tele3"><span>3 focus point spells</span></h3>
+      <p><span><strong>Misty Step</strong></span><span>: 1 action. You teleport to a square you can see within 120'.</span></p>
+      <h3 id="tele4"><span>4 focus point spells</span></h3>
+      <p><span><strong>Dimension Door</strong></span><span>: 3 actions. You create a temporary portal in the shape of a door that stays open until the end of your next turn. Any creature can go through the portal by using an Interact action while adjacent to it. The portal leads to any square you can see within 1,000'. It is a one-way portal.</span></p>
+      <h3 id="tele5"><span>5 focus point spells</span></h3>
+      <p><span><strong>Blink Charge</strong></span><span>: 2 actions. You teleport to a square you can see within 120'. Then each creature within 10' of you makes a Reflex save vs 8D4 Force damage.</span></p>
+      <h3 id="tele6"><span>6 focus point spells</span></h3>
+      <p><span><strong>Teleport</strong></span><span>: 3 actions. You attempt to teleport yourself and any number of other willing creatures who are touching you. Choose a location and make a DC 22 Arcana check. Your check counts as 1 degree of success higher if you have been to the location before. Additionally, you have advantage on the check if you have seen the location or know where it is (i.e. can point to it on a map). Additionally, you have disadvantage if you are unable to provide more than the most vague description of the place. Additionally, your check counts as 1 degree of success lower if the place does not exist or is not on your plane of existence.</span></p>
+      <p><span>Critical Success: You are all teleported to the location.</span></p>
+      <p><span>Success: You are all teleported within 120' of the location.</span></p>
+      <p><span>Failure: You are all teleported to a similar, but different, location.</span></p>
+      <p><span>Critical Failure: You are all teleported to the Astral Sea, a plane between planes totally devoid of color and home to soul-devouring monstrosities and the lost souls they devour.</span></p>
+      <h3 id="tele7"><span>7 focus point spells</span></h3>
+      <p><span><strong>Plane Shift</strong></span><span>: 3 actions. You attempt to transport yourself and any number of other willing creatures who are touching you to another plane of existence. Choose a plane and make a DC 22 Arcana check. On a success: You are all teleported to a random location on the chosen plane. On a failure you are all teleported to the Astral Sea.</span></p>
+      <h3 id="tele8"><span>8 focus point spells</span></h3>
+      <p><span><strong>Gate</strong></span><span>: 3 actions. You rip open a permanent 2-way portal. Choose a location (which can be on another plane) and make a DC 22 Arcana check. On a success you open a 2-way portal to the chosen location. On a failure you create a 2-way portal to the GM's favorite plane (probably hell). The portal stays open until you dismiss it, which is a 3 action activity and requires a successful DC 22 Arcana check by you.</span></p>
+        
+        
+        
+        
+        
+        <a id="tran"></a>
+<p><h1><span>Transmutation Discipline</span></h1></p>
+      <p><span>This a Discipline with a lot of utility spells which can be used both in and out of combat.</span></p>
+  
+      <h3 id="tran0"><span>Cantrips</span></h3>
+      <p><span><strong>Bite</strong></span><span>: 1 action. Melee range, single target, attack roll for 2D4+MOD Piercing damage.</span></p>
+      <p><span>Your teeth lengthen into sharp fangs and you bite down on your foe. </span></p>
+<br>
+      <p><span><strong>Light</strong></span><span>: 3 actions. Choose 1 object. For the next 10 minutes, that object gives off 30' of bright and 60' of dim light.</span></p>
+      <h3 id="tran1"><span>1 focus point spells</span></h3>
+      <p><span><strong>Create Water</strong></span><span>: 3 actions. Conjure 2 bulk of fresh water.</span></p>
+<br>
+      <p><span><strong>Create Food</strong></span><span>: 3 actions. Conjure 1 bulk of edible food. It doesn't taste good, but it will keep you alive.</span></p>
+      <h3 id="tran2"><span>2 focus point spells</span></h3>
+      <p><span><strong>Animal Form</strong></span><span>: 3 actions. Assume the form of an animal no more than 50% larger or smaller than you and of the same tier as you. While in this form your physical statistics (including AC and toughness) become those of the animal, but your mental stats are unchanged. You also lose the ability to speak and all special abilities from feats and classes, but gain an attack appropriate to the animal you became. If the animal has special movement like a climbing speed or flying speed you have those too. If the animal has special senses like darkvision you have those too. If the animal form is reduced to 0 wounds you revert to your normal form but lose half (rounding up) your maximum wounds (so you end up with however many wounds you had before transforming -&frac12; their maximum wounds). Otherwise the transformation lasts for 10 minutes.</span></p>
+<br>
+      <p><span><strong>Disfigure</strong></span><span>: 2 actions. Melee range. Single target. Fortitude save. </span><span>Critical success</span><span>: the target is unaffected. </span><span>Success</span><span>: the target becomes mildly disfigured, making them Clumsy 1 for 24 hours and permanently scarred. </span><span>Failure</span><span>: the target's body becomes twisted and disfigured. They become Clumsy 1 and Enfeebled 1 for 24 hours while they adjust to their new body, which is now permanently disfigured. </span><span>Critical failure</span><span>: They become Clumsy 1 and Enfeebled 1 and are permanently disfigured.</span></p>
+      <h3 id="tran3"><span>3 focus point spells</span></h3>
+      <p><span><strong>Beast Form</strong></span><span>: 2 actions. Take on a battle form of a fierce beast. This transformation lasts 1 hour, until you end it as a 1 action activity, or you go unconscious. You gain 1 temporary wound and must choose a form to use. You gain the listed things, but lose all your other abilities. Note &ldquo;prof&rdquo; refers to your Transfiguration Spell Proficiency:</span></p>
+      <p><span>Wolf</span><span>: Toughness 7, AC 14+prof, speed 35'. Medium creature</span></p>
+      <p><span>Bite: +3+prof, 1D10+3 piercing, Bleed. </span></p>
+      <p><span>Claws: +4+prof, 1D4+4 slashing, Backstabber, Agile.</span></p>
+      <p><span>Bear</span><span>: Toughness 10, AC 11+prof, speed 30'. Large creature</span></p>
+      <p><span>Bite: +4+prof, 1D10+4 piercing.</span></p>
+      <p><span>Ape</span><span>: Toughness 8, AC 13+prof, speed 30', Climb 25'. Medium creature</span></p>
+      <p><span>Fist: +4+prof, 1D6+4 bludgeoning, Forceful, Grab, Disarm, Trip. </span></p>
+      <p><span>Rock: +4+prof, 1D6+4 bludgeoning, range 30'.</span></p>
+      <p><span>Crocodile</span><span>: Toughness 9, AC 12+prof, speed 25', swim 25'. Large creature</span></p>
+      <p><span>Bite: +4+prof, 1D12+4 piercing.</span></p>
+      <p><span>Great Eagle</span><span>: Toughness 6, AC 13+prof, speed 25', 40' fly. Can carry 10 bulk while flying. Small creature</span></p>
+      <p><span>Peck: +3+prof, 1D8+3 piercing.</span></p>
+      <h3 id="tran4"><span>4 focus point spells</span></h3>
+      <p><span><strong>Stoneskin</strong></span><span>: 2 actions. Touch range. Turn a target creature's skin into hard stone, greatly increasing their resistance to weapons. The creature becomes </span><span>resistant 5 to</span><span>&nbsp;Piercing and Slashing damage for 10 minutes.</span></p>
+      <h3 id="tran5"><span>5 focus point spells</span></h3>
+      <p><span><strong>Transmutation</strong></span><span>: 3 actions. Transmute 1 bulk of a material into 1 bulk of a different material. It retains its basic form, but many fine details are lost unless you critically succeed on the check. A transmutation spellcasting check is required, and the DC for this check is 15+the absolute difference in the starting and end material. Failing the check transmutes the starting material into worthless black sludge. Critically Failing the check transmutes the starting material into something of the GM's choice (so the most awkward material they can think of). Here is a chart of a few common materials:</span></p>
+      <p><span>Worthless Black Sludge-0</span></p>
+      <p><span>Mud-5</span></p>
+      <p><span>Water-10</span></p>
+      <p><span>Wood-15</span></p>
+      <p><span>Stone-20</span></p>
+      <p><span>Flesh-25</span></p>
+      <p><span>Iron-30</span></p>
+      <p><span>Lead-35</span></p>
+      <p><span>Copper-35</span></p>
+      <p><span>Silver-45</span></p>
+      <p><span>Gold-55</span></p>
+      <p><span>Diamond-70</span></p>
+      <h3 id="tran6"><span>6 focus point spells</span></h3>
+      <p><span><strong>Polymorph</strong></span><span>: 3 actions. Polymorph a creature into another creature of the same or lower tier. They lose all their abilities and stats, but gain all the abilities and stats of their new form. This transformation lasts for 10 minutes. If their new form is reduced to 0 wounds they revert to their normal form but lose half (rounding up) their maximum wounds (so they end up with however many wounds they had before polymorphing -&frac12; their maximum wounds). Unwilling creatures get a Will save to resist the effects. Polymorph also attempts to Counteract any other spells or effects altering a creature's form. If the counteract fails then the creature returns to its altered form when polymorph ends.</span></p>
+      <h3 id="tran7"><span>7 focus point spells</span></h3>
+      <p><span><strong>Flesh to Stone</strong></span><span>: 2 actions. Melee range, single target, fortitude save. </span><span>Critical success</span><span>: the target is unaffected. </span><span>Success</span><span>: the target becomes Slowed 1 for 1 minute as their flesh briefly hardens. </span><span>Failure</span><span>: the target becomes Slowed 2 for 1 minute as their flesh hardens. </span><span>Critical Failure</span><span>: the creature's flesh turns to stone and they become petrified. They are not dead, merely suspended in stone until this spell is dispelled. They cannot move, speak, see, or otherwise interact or do anything while petrified. If their stone body is damaged that damage will remain if this spell is dispelled.</span></p>
+      <h3 id="tran8"><span>8 focus point spells</span></h3>
+      <p><span><strong>True Polymorph</strong></span><span>: 3 actions. Polymorph a creature into another creature of the same or lower tier. They lose all their abilities and stats, but gain all the abilities and stats of their new form. Unwilling creatures get a Will save to resist the effects. A polymorphed creature reduced to 0 wounds doesn't revert to their normal form; instead they follow normal Dying rules for their new form. This transformation lasts until dispelled by you as an action or is counteracted. True Polymorph also attempts to Counteract any other spells or effects altering a creature's form. If the counteract fails then the creature returns to its altered form if true polymorph ends.</span></p>
+       
+        
+        
+        
+
+     
+      <h1 id="rit"><span>Rituals</span></h1>
+      <p><span>Rituals have some DC. When casting a ritual you need to make the listed checks and beat the listed DCs (arcana most used skill for arcane rituals). If any of the checks are failed the ritual fails and the components are wasted. Critically failing these checks can also have other worse effects. Some rituals require multiple casters, known as assistants, who make additional checks which and must pass their checks to succeed at being assistants.</span></p>
+<br>
+      <p><span>If a ritual ever causes a creature to make a saving throw, the DC of the save is the highest among the caster's DCs for all skills used to cast the ritual.</span></p>
+      <h3 id="rittrain"><span>Trained</span></h3>
+      <p><span>Tier 1 rituals are almost automatic and have very few, if any, material components</span></p>
+<br>
+      <p><span><strong>Mage Hand</strong></span><span>: 10 minute ritual. 1 S cost. 1 DC 16 Arcana check. Summon a floating hand made of pure force. It is visible as a spectral floating hand. The hand can lift 5 bulk and has a thievery modifier equal to your arcana modifier-2, and has a -4 on all other skills. It acts as your dependent minion, has 1 wound, toughness 1, AC 8+your arcana modifier, and is immune to Poison and Mental damage. It has a 15' speed and fails all saving throws. The hand disappears when reduced to 0 wounds or when you create another hand.</span></p>
+<br>
+      <p><span><strong>Mage Armor</strong></span><span>: 10 minute ritual. No cost. No checks. For the next 24 hours your unarmored type armor has 2 less MAX stat bonus to AC, but has 1 additional innate toughness and AC.</span></p>
+<br>
+      <p><span><strong>Mending</strong></span><span>: 10 minute ritual. X cost. 1 DC 14 Arcana or crafting check (caster's choice). Repair 1 broken item of cost 10*X.</span></p>
+<br>
+      <p><span><strong>Unseen Servant</strong></span><span>: 10 minute ritual. 1 G cost. No checks. Create a small invisible servant that acts as your minion. It has hands and can pick things up, but has a -4 modifier on all skills so will not be good at doing anything technical. The servant can only carry 10 bulk, has 1 wound, 1 toughness, AC 8+your arcana modifier, and is immune to Poison and Mental damage. It has a 15' speed and fails all saving throws. The servant disappears when reduced to 0 wounds or you create another servant.</span></p>
+<br>
+      <p><span><strong>Alarm</strong></span><span>: 10 minute ritual. No cost. No checks. Designate a door or up to 6 consecutive 5'*5' squares. You may also designate a passphrase. When a creature opens or closes the door or enters one of the squares without uttering the passphrase you receive a mental alarm. You are unable to distinguish between different alarms you set. So if you set multiple alarms and 1 gets triggered you will not know which.</span></p>
+<br>
+      <p><span><strong>Lock</strong></span><span>: 10 minute ritual. 1 G cost. DC 14 Arcana check. Pick a non-magical lock. Increase the number of checks required to open said lock by 1 and the DC of the lock by 2.</span></p>
+<br>
+      <p><span><strong>Perpetual Flame</strong></span><span>: 10 minute ritual. 1 G cost. DC 14 Arcana check. Create a small magical flame that emits no heat or smoke. The flame lasts perpetually and consumes no oxygen. If you critically succeed on the check you can create a fancy colored flame.</span></p>
+<br>
+      <p><span><strong>Message</strong></span><span>: 10 minute ritual. No cost. DC 15 Arcana check. Utter a message of 25 words or less and choose a creature you know and have met in person. They hear your message unless they are on a different plane of existence.</span></p>
+<br>
+      <p><span><strong>Divine Light</strong></span><span>: 1 hour ritual. No cost. DC 15 Arcana check. Designate a 15' radius, 100' high cylinder. For the next 24 hours that area is filled with magical light which counts as sunlight.</span></p>
+<br>
+      <p><span><strong>Dispel Magic</strong></span><span>: 10 minute ritual. No cost. DC 12 Arcana check. Counteract a spell or ongoing magical effect. You have disadvantage on your counteract check if you are trying to counteract an ongoing magical effect instead of a spell.</span></p>
+<br>
+      <p><span><strong>Summon Familiar</strong></span><span>: 10 minute ritual. 5 S. DC 15 Arcana check. Summon a spirit in the form of a small animal. It does your bidding and acts as a Dependent minion. It has 1 wound, terrible AC, and can't make meaningful attacks. You can communicate with each other telepathically as long as you are within 120' of each other. The familiar disappears when reduced to 0 wounds or when you create another hand.</span></p>
+<br>
+      <p><span><strong>Druidcraft</strong></span><span>: 10 minute ritual. No cost. DC 12 Nature check. Make a small plant sprout from a nearby surface or invigorate a plant, making it grow twice as fast as normal and produce twice as much produce as normal (a plant can only be invigorated by magic once).</span></p>
+<br>
+      <p><span><strong>Plant Shaping</strong></span><span>: 4 hour ritual. 1 G. DC 15 Nature check. Choose a plant. You alter the shape of the plant to something of your choosing, but can't increase the weight of the plant. It is common on some islands to make houses inside the biggest trees in this way.</span></p>
+<br>
+      <p><span><strong>Water Breathing</strong></span><span>: 30 minute ritual. 4 S. DC 15 Arcana check. Choose up to 6 creatures who remain close to you while you are performing the ritual. That creature can breathe underwater for the next hour.</span></p>
+      <h3 id="ritexp"><span>Expert</span></h3>
+      <p><span>Slightly harder rituals that normally have some costly material components.</span></p>
+<br>
+      <p><span><strong>Translate</strong></span><span>: 1 hour ritual. Enough ink and paper to write down the translated message. 1 DC 16 Arcana check and 1 DC 16 Society check. Perfectly translate up to 2,000 words of text in any language and transcribe it into any other language. You don't have to speak either language (the original language and the language to translate to), but for each of the 2 languages you speak, reduce the DC of both checks by 2.</span></p>
+<br>
+      <p><span><strong>Speak with Dead</strong></span><span>: 1 hour ritual. No cost. 1 DC 18 spellcasting check. Designate 1 corpse with a functioning mouth. At the end of the ritual the mouth and head animate for 10 minutes. During that time it can speak, see, and hear, but remembers only what the creature knew in life. It is under no obligation to speak the truth or answer any questions you ask.</span></p>
+<br>
+      <p><span><strong>Bestial Curse</strong></span><span>: 1 hour ritual. A piece of an animal. 1 DC 16 spellcasting check. You imbue the animal component of the ritual with a curse that partially transforms whoever touches it into that animal. Here &ldquo;animal&rdquo; refers to any creature made of living flesh that has no innate magical abilities. Cat, Shark, Human, Owlbear count. Tree, Golem, Demon, Dragon, do not. Anyone who touches the cursed animal body part must make a fortitude save. </span><span>Critical Success</span><span>: they are unaffected by the curse. They can touch the body part as often as they like to no ill effect. </span><span>Success</span><span>: They are partially affected. Their body changes slightly as it tries to transform. The changes are relatively minor, but they do become clumsy 1 for 2 weeks as they adjust to the subtle changes. The changes are permanent. </span><span>Failure</span><span>: They are affected. The results are </span><span>as success</span><span>, but the changes are slightly more drastic and they are Clumsy 2 for 2 weeks and Clumsy 1 for an additional 2 weeks after. </span><span>Critical failure</span><span>: They succumb to the curse, transforming into a rough copy of the animal whose body part it is. Their base physical stats (Strength, Dexterity, Constitution, Toughness, and Speed) change in relation to the base physical stats for the animal, and they gain any natural abilities of the animal (e.g. a flying speed for a bird, a </span><span>jaws</span><span>&nbsp;attack for a wolf&hellip;). They also lose any abilities inherent to their previous form (race abilities, opposable thumbs, ability to speak words&hellip;). They retain their intelligence, personality, memories, tier, and mental statistics. They also are Clumsy 2 for 2 weeks and Clumsy 1 for an additional 2 weeks after.</span></p>
+<br>
+      <p><span><strong>Glyph of Warding</strong></span><span>: 1 hour ritual. 4 G cost. 1 DC 15 spellcasting check. Designate a door or up to 6 consecutive 5'*5' squares. Also choose Acid, Cold, Electric, or Fire. You may also designate a passphrase. When a creature opens or closes the door or enters one of the squares without uttering the passphrase the glyph explodes, dealing 6D4 of the chosen damage in a 10' burst, 15' cone, or 30' line with a basic reflex save.</span></p>
+<br>
+      <p><span><strong>Darkvision</strong></span><span>: 1 hour. No cost. 1 DC 15 spellcasting check. 1 creature gains the Darkvision ability for the next 8 hours.</span></p>
+<br>
+      <p><span><strong>Magic Circle</strong></span><span>: 1 hour ritual. 6 G cost. 1 DC 18 spellcasting check. Designate a 10' or less radius circle that you trace on the floor. Also choose a creature type. Creatures of the chosen type cannot cross the line of the magic circle; they are prevented by an impenetrable invisible barrier that doesn't do anything to other creatures.</span></p>
+<br>
+      <p><span><strong>Revivify</strong></span><span>: 1 hour ritual. 5 G cost. 1 DC 20 Arcana or Religious Lore check. 1 creature who died in the last 24 hours and whose soul is free and willing is brought back to life on 1 wound. This does not heal any bodily ailments, so they will probably die again without healing.</span></p>
+<br>
+      <p><span><strong>Sending</strong></span><span>: 10 minute ritual. 1 G cost. 1 DC 18 Arcana check. Can have 1 assistant, who speaks the message to be sent. Send a message (less than a minute of you or your assistant speaking) to a creature. You have to have met the creature receiving the message or know their true name (just their actual full name, not any nickname or false name). The receiving creature must be on the same plane of existence.</span></p>
+<br>
+      <p><span><strong>Plant Growth</strong></span><span>: 4 hour ritual. 8 G cost. 1 DC 16 Arcana check and 1 DC 16 Nature check. You invigorate tha plants, making them grow stronger and faster. For the next year all plants within 1001' grow twice as fast, twice as big, and produce twice as much produce.</span></p>
+<br>
+      <p><span><strong>Consecrate</strong></span><span>: 1 hour ritual. 12 G cost. 1 DC 20 Arcana check or 1 DC 20 Religious Lore check. You consecrate an area to a certain being or deity, allowing them greater influence over the area. The area can be no more than a 101' radius sphere, but you can choose any smaller area. Most deities choose to invigorate their worshipers while they are on consecrated grounds and forbid their sworn enemies from entering their consecrated grounds.</span></p>
+<br>
+      <p><span><strong>Desecrate</strong></span><span>: 1 hour ritual. 12 G cost. 1 DC 20 Arcana check or 1 DC 20 Religious Lore check. You desecrate an area, purging all influence a deity/being had over the area (such as a Consecrated area). The deity/being no longer has any special attachment to the area and will be unable to influence it in the way they used to. This does nothing if the area has no deific influence.</span></p>
+<br>
+      <p><span><strong>Augury</strong></span><span>: 1 hour ritual. 6 G cost. 1 DC 18 Arcana/religious lore check. Contact a powerful being such as a deity and ask them a yes or no question. They will respond with yes, no, or unclear. It's advised to choose a nice being who won't take pleasure in blatantly lying or purposefully misleading you.</span></p>
+<br>
+      <p><span><strong>Water Walk</strong></span><span>: 1 hour ritual. X G cost. 1 DC 20 Arcana check. Up to X target creatures can walk on water as if it were extremely thick and sticky mud for the next 4 hours. It counts as Difficult terrain.</span></p>
+<br>
+      <h3 id="ritmas"><span>Master</span></h3>
+      <p><span>These are pretty difficult rituals, often requiring 2 checks and a respectable investment in material components.</span></p>
+<br>
+      <p><span><strong>Commune with Nature</strong></span><span>: 4 hour ritual. No cost. 1 DC 22 Nature check and 1 DC 22 Arcana check. For the next 24 hours you can communicate with all natural living things within 1 mile of the casting site. So you can talk to plants and animals, they will understand you, and you will understand their responses.</span></p>
+<br>
+      <p><span><strong>Magic Mailbox</strong></span><span>: 4 hour ritual. 16 G cost plus 2 small containers. 2 DC 20 Arcana checks. The 2 containers provided for components are now linked. Any object placed in one is transported instantly to the other, and vice versa.</span></p>
+<br>
+      <p><span><strong>Magic Weapon</strong></span><span>: 1 hour ritual. 18 G cost. 2 DC 22 Arcana checks. 1 NON-magic weapon you touch during the ritual becomes magic. It has a +1 item bonus to hit and a +1 item bonus to damage. It loses 2 rune slots as this enchantment is not compatible with runes.</span></p>
+<br>
+      <p><span><strong>Planar Message</strong></span><span>: 1 hour ritual. No cost. 2 DC 19 Arcana checks. Choose a creature you know, or speak a creature's true name. Then speak a short message (less than 1 minute long). The chosen creature receives the message telepathically, regardless of the intervening distance or being on different planes. The target can also respond with a short message.</span></p>
+<br>
+      <p><span><strong>Create Undead</strong></span><span>: 4 hour ritual. 12 G cost. 2 DC 22 Arcana checks. When you cast this ritual you can choose to pay half the casting cost for -1 point, double the casting cost for +1 point, +5 DC for +1 point, -5 DC for -1 point. Choose a corpse. You also get +1 point for each tier the corpse was (+1 for tier 1 creature, +3 for tier 3) and +1 point for each tier you are. That corpse becomes animated as either a Skeleton or Zombie depending on its level of decay. At base it is tier 0, but you can spend 2 points to make it tier 1, 5 points to make it tier 2, or 8 points to make it tier 3. At base it is a dependent minion under your control, which means it follows your commands to the best of its ability (note undead tend to be rather stupid so it might misunderstand complicated commands). You can spend 1 point to make it an independent minion instead. Note undead have terrible memories so they will forget their commands pretty quickly (it is good practice to give undead new orders every 24 hours). You can spend 1 point to make it have a good memory, meaning it will never forget your commands. The corpse animated by this ritual retains some of its physical stats and abilities from when it was alive, but no magical abilities. So an animated rat will have the physical stats of a rat. An animated humanoid will have the physical stats of that humanoid. An animated griffin will have the physical stats of a griffin, and will likely be able to fly.</span></p>
+<br>
+      <p><span><strong>Cup of Dust</strong></span><span>: 6 hour ritual. 20 G cost, and 1 cup, tankard, goblet, or other drinking vessel. 2 DC 21 Arcana or Occult Lore checks. The cup used for the material component becomes terribly cursed. Any amount of liquid ingested from the cup dehydrates the drinker just as much as it would have hydrated from drinking pure water. Note this does not change the liquid in any way; so it will taste the same and have all the same properties. It can also be removed from the cup and drunk from another vessel and will then hydrate as normal. Furthermore because of how dehydration works any amount drunk from the cup will normally make the drinker Fatigued. And if a creature only drinks from the cup their maximum number of wounds is reduced by 1 for each day they continue to drink from the cup. A creature whose maximum </span><span>wounds</span><span>&nbsp;is ever 0 instantly dies.</span></p>
+<br>
+      <p><span><strong>Telepathic Link</strong></span><span>: 2 hour ritual. No cost. 2 DC 19 Arcana checks. At the end of the ritual touch a creature. For the next 24 hours you and that creature are telepathically linked. This means you can converse with each other silently and across vast distances.</span></p>
+<br>
+      <p><span><strong>Teleportation Circle</strong></span><span>: 1 hour ritual. 12 G. 2 DC 22 Arcana checks. Half cost if leaving from an already made permanent teleportation circle. At the end of the ritual you and any creatures or objects inside the circle you draw during this ritual are teleported to a permanent teleportation circle who's identifying code you know. Teleportation circles are normally quite fancy, but you can make a basic one with its own unique identifying code by performing this ritual and not teleporting anything. Making a circle with the same code as an already existing one is a serious problem as now anyone traveling to either circle goes to a random circle. Hence mages are very reluctant to share their teleportation circle codes.</span></p>
+<br>
+      <p><span><strong>Scrying</strong></span><span>: 1 hour ritual. 12 G or a 60 G crystal ball that is reusable. 2 Arcana checks vs the Will DC of the chosen creature (or DC 18 if a place is chosen). Choose a creature or place. If you have met the creature, know the creature's true name, or have been to the place you need only make 1 check. This ritual creates an invisible sensor somewhere nearby the creature/location. You can see through the sensor as if it were a window with a 360 degree view. The sensor also picks up and transmits sound as if your ear were in the place of the sensor. The sensor disappears after 10 minutes or you dismiss it as an action. If the creature or place does not exist or is on a different plane, or you critically fail one of the checks you can be shown something random and probably unhelpful/misleading.</span></p>
+<br>
+      <p><span><strong>Forbiddance</strong></span><span>: 4 hour ritual. 24 G. 2 DC 20 Arcana checks. Designate an area that fits within a 101' radius sphere. All Teleportation in and out of the area, Scrying within the area, and Divination effects to learn about the area are Counteracted using your Arcana modifier with Advantage.</span></p>
+<br>
+      <p><span><strong>Hex</strong></span><span>: 2 hour ritual. 6 G and a piece of the target creature's body. A drop of blood or single hair suffices. 2 Arcana checks vs the target's Will DC. The target creature becomes Hexed. This is a powerful curse that makes them Weak 1 to all damage, Doomed 1, and gives them Disadvantage on all skill checks using a chosen statistic.</span></p>
+<br>
+      <p><span><strong>Divine Guidance</strong></span><span>: 2 hour ritual. 12 G. 1 DC 20 Arcana check and 1 DC 20 Religious Lore check. You contact a deity and implore them to guide your path. You can tell the deity what you need guidance on by stating a goal you have that you need guidance to accomplish, but ultimately they will select a creature, object, or place they think you should visit. Normally it will help you towards your stated goal, but sometimes the deity will point you towards something totally unrelated if they think it will help you more or just want to prank you. You will know the rough direction of said creature, object, or place until you do or accomplish whatever the deity thought you should do or accomplish with the creature/object/place.</span></p>
+<br>
+      <p><span><strong>Mage's Tower</strong></span><span>: 6 hour ritual. 36 G. 2 DC 20 Arcana checks. You conjure a magical tower. The tower must fit within a 100' tall 30' radius cylinder, but its exact shape is up to you. The walls, floor, and interior of the tower are made of pure magical force, but come with illusions that make them look like whatever you decide. The tower is immune to all damage, but can be dispelled by powerful enough magic users. The tower can have doors and windows but lacks any fine details (like locks, or intricate artwork) and is totally unfurnished (no mattresses, sheets, pillows, cooking utensils, ect.).</span></p>
+
+      <h3 id="ritleg"><span>Legendary</span></h3>
+      <p><span>Tier 4 rituals are incredibly powerful but are very expensive and extremely difficult to perform correctly. Even the most powerful and learned magic users struggle to cast them.</span></p>
+<br>
+      <p><span><strong>Absorb Magic</strong></span><span>: 1 hour ritual. No cost. 1 DC 25 Arcana check. Can have any number of assistants, who each make 1 DC 20 spellcasting check. You and all assistants regain all lost focus points. Can use a diamond worth 100G, which halves the time of the ritual (the diamond isn't destroyed, it just helps the process of absorbing the magic). Can also use a permanent magic item, which also halves the time of the ritual but increases the DC of your check to the DC of the item (or 25, whichever is higher), increases the number of checks you have to make by 1, and increased the DC of the assistants' checks to 5 lower than the item's DC (or 20, whichever is higher). This disables the item for X hours, where X is the total number of focus points regained amongst you and the assistants.</span></p>
+<br>
+      <p><span><strong>Spell Immunity</strong></span><span>: 1 hour ritual. 32 G cost. 3 DC 25 Arcana checks. Can have 1 assistant, who makes 1 DC 20 spellcasting check. Name a spell. For the next 24 hours you or your assistant are completely immune to that spell. A creature can only be immune in this way to 1 spell at any given time. If you are already under the effect of the spell you are immune to its effects for 24 hours.</span></p>
+<br>
+      <p><span><strong>Raise Undead</strong></span><span>: 12 hour ritual. 100 G cost. 3 DC 25 Arcana checks. Can have any number of assistants, who must each make 1 DC 22 spellcasting check. Each corpse within 1 mile becomes animated a tier 0,1, or 2 Skeleton or Zombie depending on its level of decay and tier (tier 0 creatures become tier 0, tier 1 and 2 become tier 1, tier 3 and 4 become tier 2). They are not under anyone's control and will act completely of their own accord (which means they will attack the closest living creatures). However, the undead animated by this ritual view you and any of your assistants as allies and will not attack you nor your assistants.</span></p>
+<br>
+      <p><span><strong>Creation</strong></span><span>: 8 hour ritual. No cost. 3 DC 23 Arcana checks. Create 100 bulk of wood, stone, metal, water, or flesh. It appears out of nothing but is totally real.</span></p>
+<br>
+      <p><span><strong>Planar Binding</strong></span><span>: 6 hour ritual. 50 G cost. 3 DC 24 spellcasting checks. Choose a creature. That creature must remain within 30' of you throughout the ritual, and cannot change planes during the ritual as long as it is within 30' of you. At the end of the ritual that creature is bound to the current plane. It cannot use any form of planar travel while bound. Note summon spells tend to summon creatures from different planes, and when the summon spell ends the summoned creature returns to its native plane. So if you summon a creature, then bind it to the current lane it cannot return to its native plane and the summon spell can not end.</span></p>
+<br>
+      <p><span><strong>Curse of Death</strong></span><span>: 6 hour ritual. 80 G cost. 3 DC 26 Arcana or Occult Lore checks. Can have 1 assistant who must make 1 DC 26 spellcasting check. If you have an assistant you have advantage on your checks. At the end of the ritual speak a creature's ture name. That creature makes a fortitude save vs your Arcana or Occult Lore DC (whichever is higher). If they </span><span>Critically Succeed</span><span>: they are unaffected. </span><span>Succeed</span><span>&nbsp;they become Doomed 1. </span><span>Fail</span><span>: they become Doomed 2. </span><span>Critically Fail</span><span>: Doomed 3.</span></p>
+<br>
+      <p><span><strong>Globe of Invulnerability</strong></span><span>: 24 hour ritual. 120 G cost. 2 DC 30 Arcana checks. Can have 2 assistants who must each make 1 DC 25 spellcasting check. If you have 2 assistants you have advantage on your checks. Create a perfect sphere of any radius less than 1 mile centered on the square you are standing on when you finish the ritual. Nothing may enter or leave the sphere unless you make an exception for it during the ritual. For instance you could allow yourself and your assistants to enter and exit. You could also allow anyone who speaks a certain passphrase to enter or exit. You could allow air to come and go freely so anyone inside doesn't suffocate.</span></p>
+<br>
+      <p><span><strong>Resurrection</strong></span><span>: 6 hour ritual. 100 G cost. 3 DC 25 Arcana or Religious Lore checks. Choose a corpse you can touch throughout the ritual. If that corpse's soul is free and willing it is returned to the corpse and then the corpse is brought back to life. The body is also cured of all mortal wounds and any missing body parts are regrown. Can also be used on alive creatures to regrow missing body parts. This costs half as much and takes half as long.</span></p>
+<br>
+      <p><span><strong>True Polymorph</strong></span><span>: 4 hour ritual. 60 G cost. 3 DC 28 Arcana checks. Can have an assistant who doesn't need to make any checks and gives you Advantage on your checks. If you had an assistant that assistant is polymorphed into a creature of their choice. If you did not have an assistant you or a willing creature you touch is polymorphed instead. You can also select an unwilling creature but they get a Will save vs your Arcana DC to resist. Polymorphed means their physical statistics become those of the chosen creature. They lose all their class abilities, but gain any class abilities of the chosen creature. This polymorph lasts until dispelled, which can only be done by something like the Dispel Magic ritual.</span></p>
+<br>
+      <p><span><strong>Puppet</strong></span><span>: 12 hour ritual. 80 G cost and a puppet vaguely resembling the target creature that contains some part of the target's body (a drop of blood or single hair suffices). 3 Arcana checks vs the target's Will DC. If you do not know the target's true name your checks are made at Disadvantage. The target creature becomes linked to the puppet. Whenever the puppet moves, so too does the target creature. Whenever the puppet takes damage, so too does the target creature (puppet has AC 10). It takes an action to manipulate the puppet, which forces the target's body to also move in the same way.</span></p>
+<br>
+      <p><span><strong>Sphere of Annihilation</strong></span><span>: 24 hour ritual. 100 G cost. 2 DC 30 Arcana checks. Can have 2 assistants who must each make 1 DC 25 spellcasting check. If you have 2 assistants you have advantage on your checks. Create a perfect sphere of any radius less than 1 mile centered on the square you are standing on when you finish the ritual. Every living thing inside the sphere makes a Fortitude save vs your Arcana DC. You and your assistants treat your saves as 1 degree of success higher. </span><span>Critical Success</span><span>: take 30 Negative damage. </span><span>Success</span><span>: take 60 Negative damage. </span><span>Failure</span><span>: take 120 Negative damage. </span><span>Critical Failure</span><span>: take 240 Negative damage. </span></p>
+<br>
+      <p><span><strong>Revelation</strong></span><span>: 12 hour ritual. 101 G cost. The ultimate divination ritual. You behold the cosmos in all its infinite variations and focus on the most likely version of reality. You can observe any 6 hours of that reality at any point in space of time. Can be non-consecutive hours. Bear in mind that reality might not occur, especially if you take steps to prevent or alter it.</span></p>
+<br>
+      <p><span><strong>Devil's Sight</strong></span><span>: 4 hour ritual. 50 G cost and the blood of a sentient creature killed within the last 24 hours. 3 DC 25 Arcana or Occult Lore checks. You gain Devil's Sight, a powerful form of Darkvision that can see through any amount of normal and magical darkness.</span></p>
+      
+        
+        
+
+
+</body>
+</html>
+
